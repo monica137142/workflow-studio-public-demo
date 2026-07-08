@@ -3222,9 +3222,8 @@
 
     .automation-status-cell {
       display: inline-flex;
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 7px;
+      align-items: center;
+      justify-content: flex-start;
       min-width: 0;
     }
 
@@ -3276,54 +3275,74 @@
     }
 
     .automation-form-action.toggle-pause {
-      min-height: 30px;
+      position: relative;
+      width: 40px;
+      height: 22px;
+      min-height: 22px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      border-color: #dce8df;
-      background: #f5fbf7;
-      color: #1b9c61;
+      flex-shrink: 0;
+      padding: 2px;
+      border-color: transparent;
+      border-radius: 999px;
+      background: #22b573;
+      color: transparent;
+      font-size: 0;
+      line-height: 0;
+      box-shadow: inset 0 0 0 1px rgba(18, 143, 86, .12);
     }
 
     .automation-form-action.toggle-pause:hover {
-      border-color: #bfe5cd;
-      background: #eefaf3;
-      color: #1b9c61;
+      border-color: transparent;
+      background: #1fa868;
+      color: transparent;
     }
 
     .automation-form-action.toggle-start {
-      min-height: 30px;
+      position: relative;
+      width: 40px;
+      height: 22px;
+      min-height: 22px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      border-color: #dde1e5;
-      background: #f5f6f8;
-      color: #6b7178;
+      flex-shrink: 0;
+      padding: 2px;
+      border-color: transparent;
+      border-radius: 999px;
+      background: #d9dee3;
+      color: transparent;
+      font-size: 0;
+      line-height: 0;
+      box-shadow: inset 0 0 0 1px rgba(94, 104, 114, .1);
     }
 
     .automation-form-action.toggle-start:hover {
-      border-color: #d4d9de;
-      background: #eef1f3;
-      color: #4f565d;
+      border-color: transparent;
+      background: #cfd5db;
+      color: transparent;
     }
 
     .automation-form-action.toggle-pause::before,
     .automation-form-action.toggle-start::before {
       content: "";
-      width: 7px;
-      height: 7px;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 18px;
+      height: 18px;
       border-radius: 999px;
+      background: #fff;
       flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(20, 30, 40, .2);
+      transition: transform .16s ease, box-shadow .16s ease;
     }
 
     .automation-form-action.toggle-pause::before {
-      background: #22b573;
-      box-shadow: 0 0 0 3px rgba(34, 181, 115, .12);
+      transform: translateX(18px);
     }
 
     .automation-form-action.toggle-start::before {
-      background: #a6adb4;
-      box-shadow: 0 0 0 3px rgba(166, 173, 180, .14);
+      transform: translateX(0);
     }
 
     .schedule-task-section {
@@ -7554,6 +7573,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       if (!row || row.dataset.bound === "true") return;
       row.dataset.bound = "true";
       row.querySelectorAll("[data-auto-action]").forEach(button => {
+        if (button.dataset.autoAction === "toggle") {
+          const status = row.querySelector(".automation-status");
+          syncAutomationSwitchButton(button, !status?.classList.contains("paused"));
+        }
         button.addEventListener("click", event => {
           event.stopPropagation();
           const taskName = row?.dataset.taskName || "自动化任务";
@@ -7565,9 +7588,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
               status.classList.remove("warning");
               status.textContent = isPaused ? "运行中" : "已暂停";
             }
-            button.textContent = isPaused ? "运行中" : "暂停";
-            button.classList.toggle("toggle-pause", isPaused);
-            button.classList.toggle("toggle-start", !isPaused);
+            syncAutomationSwitchButton(button, isPaused);
             renderAutomationScopeStats();
             showToast(`${isPaused ? "已开启" : "已暂停"}「${taskName}」`);
             return;
@@ -7589,6 +7610,16 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         if (event.target.closest("button")) return;
         openAutomationRecordDrawer(row);
       });
+    }
+
+    function syncAutomationSwitchButton(button, isRunning) {
+      if (!button) return;
+      button.classList.toggle("toggle-pause", isRunning);
+      button.classList.toggle("toggle-start", !isRunning);
+      button.setAttribute("aria-pressed", String(isRunning));
+      button.setAttribute("aria-label", isRunning ? "暂停任务" : "开启任务");
+      button.setAttribute("title", isRunning ? "运行中" : "已暂停");
+      button.textContent = isRunning ? "运行中" : "已暂停";
     }
 
     function appendAutomationTaskRow(agent, history) {
