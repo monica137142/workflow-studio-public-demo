@@ -8064,7 +8064,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         ? actionButtonContent("开通权限")
         : isTaskAgent
           ? actionButtonContent("新建任务", "task")
-          : actionButtonContent("新建对话", "chat");
+          : actionButtonContent("进入对话", "chat");
       agentDrawerStartBtn.className = `cbtn ${state.drawerRequiresPermission ? "permission" : "primary"}`;
       agentDrawerSkills.innerHTML = "";
       agentSkills(agent).forEach(skill => {
@@ -8896,7 +8896,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const isPermissionCard = isPermissionAgent(agent);
       const isTaskCard = isCopyrightTaskAgent(agent);
       const actionClass = agent.group === "training" ? "train" : isPermissionCard ? "permission" : "primary";
-      const actionText = agent.group === "training" ? "训练" : isTaskCard ? "新建任务" : isPermissionCard ? "开通权限" : "新建对话";
+      const actionText = agent.group === "training" ? "训练" : isTaskCard ? "新建任务" : isPermissionCard ? "开通权限" : "进入对话";
       const actionIcon = isTaskCard ? "task" : !isPermissionCard && agent.group !== "training" ? "chat" : "";
       const card = document.createElement("article");
       card.className = `acard ${agent.group === "training" ? "training" : ""} ${state.drawerAgent === agent.name ? "selected" : ""}`;
