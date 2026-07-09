@@ -4970,6 +4970,42 @@
       transform: rotate(-45deg);
     }
 
+    .task-upload-continue {
+      width: fit-content;
+      min-height: 30px;
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 5px 12px;
+      border: 1px solid #bfead2;
+      border-radius: 8px;
+      background: #fff;
+      color: #1b9c61;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: border-color .15s ease, background .15s ease, color .15s ease;
+    }
+
+    .task-upload-continue:hover {
+      border-color: #8fd9b3;
+      background: rgba(34, 181, 115, .06);
+      color: #12824c;
+    }
+
+    .task-upload-continue[hidden] {
+      display: none;
+    }
+
+    .task-upload-continue::before {
+      content: "+";
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 1;
+    }
+
     .task-upload-hint {
       margin-left: auto;
       color: #969ba1;
@@ -5602,6 +5638,7 @@
                         <span class="task-upload-hint">支持上传 .zip 压缩包，包含视频与配置素材</span>
                         <input class="task-file" id="inlineTaskMaterial" type="file" accept=".zip,application/zip">
                       </div>
+                      <button class="task-upload-continue" type="button" id="inlineTaskContinueUploadBtn" hidden>继续上传</button>
                       <pre class="task-upload-spec">任意目录/
 ├─ tag.txt
 └─ video_001.mp4
@@ -6837,6 +6874,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
             <span class="task-upload-hint">支持上传 .zip 压缩包，包含视频与配置素材</span>
             <input class="task-file" id="copyrightTaskMaterial" type="file" accept=".zip,application/zip">
           </div>
+          <button class="task-upload-continue" type="button" id="copyrightTaskContinueUploadBtn" hidden>继续上传</button>
           <pre class="task-upload-spec">任意目录/
 ├─ tag.txt
 └─ video_001.mp4
@@ -7199,6 +7237,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const copyrightTaskMaterial = document.getElementById("copyrightTaskMaterial");
     const copyrightTaskFileName = document.getElementById("copyrightTaskFileName");
     const copyrightTaskFileRemoveBtn = document.getElementById("copyrightTaskFileRemoveBtn");
+    const copyrightTaskContinueUploadBtn = document.getElementById("copyrightTaskContinueUploadBtn");
     const scheduleTaskDialog = document.getElementById("scheduleTaskDialog");
     const scheduleTaskCloseBtn = document.getElementById("scheduleTaskCloseBtn");
     const scheduleTaskCancelBtn = document.getElementById("scheduleTaskCancelBtn");
@@ -7223,6 +7262,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const inlineTaskMaterial = document.getElementById("inlineTaskMaterial");
     const inlineTaskFileName = document.getElementById("inlineTaskFileName");
     const inlineTaskFileRemoveBtn = document.getElementById("inlineTaskFileRemoveBtn");
+    const inlineTaskContinueUploadBtn = document.getElementById("inlineTaskContinueUploadBtn");
     const inlineTaskCronCyclePanel = document.getElementById("inlineTaskCronCyclePanel");
     const inlineTaskResetBtn = document.getElementById("inlineTaskResetBtn");
     const inlineTaskCronCycleDetails = document.querySelectorAll("[data-inline-cycle-detail]");
@@ -7517,22 +7557,24 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 重试配置：超时 ${fieldValue("inlineTaskTimeoutMinutes", "不限")} 分钟，失败重试 ${fieldValue("inlineTaskRetryCount", "0")} 次，间隔 ${fieldValue("inlineTaskRetryInterval", "5")} 分钟`;
     }
 
-    function syncTaskUploadRemoveButton(fileNameNode, removeButton) {
-      if (!fileNameNode || !removeButton) return;
-      removeButton.hidden = !fileNameNode.textContent || fileNameNode.textContent === "选择文件";
+    function syncTaskUploadActions(fileNameNode, removeButton, continueButton) {
+      if (!fileNameNode) return;
+      const hasFile = Boolean(fileNameNode.textContent && fileNameNode.textContent !== "选择文件");
+      if (removeButton) removeButton.hidden = !hasFile;
+      if (continueButton) continueButton.hidden = !hasFile;
     }
 
-    function clearTaskUpload(fileInput, fileNameNode, removeButton) {
+    function clearTaskUpload(fileInput, fileNameNode, removeButton, continueButton) {
       if (fileInput) fileInput.value = "";
       if (fileNameNode) fileNameNode.textContent = "选择文件";
-      syncTaskUploadRemoveButton(fileNameNode, removeButton);
+      syncTaskUploadActions(fileNameNode, removeButton, continueButton);
     }
 
     function resetInlineTaskForm(showResetToast = false) {
       document.getElementById("inlineTaskName").value = "Tiktok上传定时任务";
       document.getElementById("inlineTaskBrowser").selectedIndex = 0;
       document.getElementById("inlineTaskStartTime").value = "";
-      clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn);
+      clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn, inlineTaskContinueUploadBtn);
       if (showResetToast) showToast("已重置任务表单");
     }
 
@@ -8918,7 +8960,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       }
       if (copyrightTaskFileName) copyrightTaskFileName.textContent = options.fileName || "选择文件";
       if (copyrightTaskMaterial) copyrightTaskMaterial.value = "";
-      syncTaskUploadRemoveButton(copyrightTaskFileName, copyrightTaskFileRemoveBtn);
+      syncTaskUploadActions(copyrightTaskFileName, copyrightTaskFileRemoveBtn, copyrightTaskContinueUploadBtn);
       copyrightTaskDialog.dataset.mode = isEdit ? "edit" : "create";
       populateNumberSelects();
       syncTaskCronCycleDetails();
@@ -9698,21 +9740,27 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     });
     copyrightTaskMaterial.addEventListener("change", () => {
       copyrightTaskFileName.textContent = copyrightTaskMaterial.files?.[0]?.name || "选择文件";
-      syncTaskUploadRemoveButton(copyrightTaskFileName, copyrightTaskFileRemoveBtn);
+      syncTaskUploadActions(copyrightTaskFileName, copyrightTaskFileRemoveBtn, copyrightTaskContinueUploadBtn);
     });
     inlineTaskMaterial.addEventListener("change", () => {
       inlineTaskFileName.textContent = inlineTaskMaterial.files?.[0]?.name || "选择文件";
-      syncTaskUploadRemoveButton(inlineTaskFileName, inlineTaskFileRemoveBtn);
+      syncTaskUploadActions(inlineTaskFileName, inlineTaskFileRemoveBtn, inlineTaskContinueUploadBtn);
     });
     copyrightTaskFileRemoveBtn?.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
-      clearTaskUpload(copyrightTaskMaterial, copyrightTaskFileName, copyrightTaskFileRemoveBtn);
+      clearTaskUpload(copyrightTaskMaterial, copyrightTaskFileName, copyrightTaskFileRemoveBtn, copyrightTaskContinueUploadBtn);
     });
     inlineTaskFileRemoveBtn?.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
-      clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn);
+      clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn, inlineTaskContinueUploadBtn);
+    });
+    copyrightTaskContinueUploadBtn?.addEventListener("click", () => {
+      copyrightTaskMaterial?.click();
+    });
+    inlineTaskContinueUploadBtn?.addEventListener("click", () => {
+      inlineTaskMaterial?.click();
     });
     document.querySelectorAll('input[name="taskScheduleMode"]').forEach(input => {
       input.addEventListener("change", () => {
