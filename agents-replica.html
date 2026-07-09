@@ -1024,6 +1024,15 @@
       transform: translateY(-1px);
     }
 
+    .acard:focus {
+      outline: none;
+    }
+
+    .acard:focus-visible {
+      outline: 3px solid rgba(34, 181, 115, .24);
+      outline-offset: 2px;
+    }
+
     .acard.training { background: #fafbfc; }
 
     .acard.selected {
@@ -1033,13 +1042,13 @@
     }
 
     .acard.inline-panel-selected {
-      border-color: rgba(18, 153, 99, .86);
+      border-color: var(--color-primary);
       background: #fff;
       box-shadow: 0 8px 22px rgba(34, 181, 115, .14), 0 0 0 3px rgba(34, 181, 115, .2);
     }
 
     .acard.inline-panel-selected:hover {
-      border-color: rgba(18, 153, 99, .92);
+      border-color: var(--color-primary);
       box-shadow: 0 10px 26px rgba(34, 181, 115, .17), 0 0 0 3px rgba(34, 181, 115, .24);
     }
 
