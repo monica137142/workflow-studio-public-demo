@@ -1193,6 +1193,18 @@
       color: #12824c;
     }
 
+    .cbtn.permission.pending {
+      border-color: #dde1e5;
+      background: #f5f6f8;
+      color: #8a9199;
+    }
+
+    .cbtn.permission.pending:hover {
+      border-color: #cfd5db;
+      background: #eef1f3;
+      color: #6b7178;
+    }
+
     .btn-icon {
       width: 14px;
       height: 14px;
@@ -6854,6 +6866,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     ];
 
     const conversationHiddenAgentNames = new Set(["点墨设计", "剧查查", "Google Trends"]);
+    const permissionRequestAgentNames = new Set();
     const state = { page: "agents", scope: "all", category: "all", query: "", selected: "大盘数据分析助手", activeSessionId: "", drawerAgent: "", drawerRequiresPermission: false, automationView: "automation" };
     const routeScrollPositions = new Map();
     const searchInput = document.getElementById("searchInput");
@@ -7421,6 +7434,18 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const servingAgents = agents.filter(item => item.group === "serving");
       const servingIndex = servingAgents.indexOf(agent);
       return servingIndex >= 4 && servingIndex < 8;
+    }
+
+    function hasPendingPermissionRequest(agent) {
+      return Boolean(agent && permissionRequestAgentNames.has(agent.name));
+    }
+
+    function submitPermissionRequest(agent) {
+      if (!agent) return;
+      permissionRequestAgentNames.add(agent.name);
+      showToast("申请已提交，请等候批准");
+      render();
+      if (state.drawerAgent === agent.name) renderAgentDrawer(agent);
     }
 
     function isCopyrightTaskAgent(agent) {
@@ -8092,14 +8117,15 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       agentDrawerCategory.textContent = agentCategory(agent);
       agentDrawerDesc.textContent = clean(agent.desc);
       const isTaskAgent = isCopyrightTaskAgent(agent);
+      const isPendingPermission = hasPendingPermissionRequest(agent);
       agentDrawerSkillsSection.hidden = isTaskAgent;
       agentDrawerPromptsSection.hidden = isTaskAgent;
       agentDrawerStartBtn.innerHTML = state.drawerRequiresPermission
-        ? actionButtonContent("开通权限")
+        ? actionButtonContent(isPendingPermission ? "申请中" : "开通权限")
         : isTaskAgent
           ? actionButtonContent("新建任务", "task")
           : actionButtonContent("进入对话", "chat");
-      agentDrawerStartBtn.className = `cbtn ${state.drawerRequiresPermission ? "permission" : "primary"}`;
+      agentDrawerStartBtn.className = `cbtn ${state.drawerRequiresPermission ? `permission${isPendingPermission ? " pending" : ""}` : "primary"}`;
       agentDrawerSkills.innerHTML = "";
       agentSkills(agent).forEach(skill => {
         const tag = document.createElement("span");
@@ -8929,8 +8955,9 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     function renderCard(agent) {
       const isPermissionCard = isPermissionAgent(agent);
       const isTaskCard = isCopyrightTaskAgent(agent);
-      const actionClass = agent.group === "training" ? "train" : isPermissionCard ? "permission" : "primary";
-      const actionText = agent.group === "training" ? "训练" : isTaskCard ? "新建任务" : isPermissionCard ? "开通权限" : "进入对话";
+      const isPendingPermission = hasPendingPermissionRequest(agent);
+      const actionClass = agent.group === "training" ? "train" : isPermissionCard ? `permission${isPendingPermission ? " pending" : ""}` : "primary";
+      const actionText = agent.group === "training" ? "训练" : isTaskCard ? "新建任务" : isPermissionCard ? (isPendingPermission ? "申请中" : "开通权限") : "进入对话";
       const actionIcon = isTaskCard ? "task" : !isPermissionCard && agent.group !== "training" ? "chat" : "";
       const card = document.createElement("article");
       card.className = `acard ${agent.group === "training" ? "training" : ""} ${state.drawerAgent === agent.name ? "selected" : ""}`;
@@ -8965,7 +8992,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
           return;
         }
         if (isPermissionCard) {
-          showToast("已提交开通权限申请");
+          submitPermissionRequest(agent);
           return;
         }
         openNewAgentConversation(agent);
@@ -9179,7 +9206,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const agent = agents.find(item => item.name === state.drawerAgent);
       if (!agent) return;
       if (state.drawerRequiresPermission) {
-        showToast("已提交开通权限申请");
+        submitPermissionRequest(agent);
         return;
       }
       if (isCopyrightTaskAgent(agent)) {
