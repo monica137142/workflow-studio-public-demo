@@ -4921,6 +4921,53 @@
       color: #33383d;
       font-size: 12.5px;
       font-weight: 500;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .task-upload-remove {
+      position: relative;
+      z-index: 2;
+      width: 22px;
+      height: 22px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 0;
+      border-radius: 7px;
+      background: transparent;
+      color: #8a9199;
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease;
+    }
+
+    .task-upload-remove:hover {
+      background: #eef1f3;
+      color: #4f565d;
+    }
+
+    .task-upload-remove[hidden] {
+      display: none;
+    }
+
+    .task-upload-remove::before,
+    .task-upload-remove::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 1.2px;
+      border-radius: 999px;
+      background: currentColor;
+    }
+
+    .task-upload-remove::before {
+      transform: rotate(45deg);
+    }
+
+    .task-upload-remove::after {
+      transform: rotate(-45deg);
     }
 
     .task-upload-hint {
@@ -5551,6 +5598,7 @@
                       <div class="task-upload">
                         <span class="task-upload-icon" aria-hidden="true"></span>
                         <span class="task-upload-text" id="inlineTaskFileName">选择文件</span>
+                        <button class="task-upload-remove" type="button" id="inlineTaskFileRemoveBtn" title="删除附件" aria-label="删除附件" hidden></button>
                         <span class="task-upload-hint">支持上传 .zip 压缩包，包含视频与配置素材</span>
                         <input class="task-file" id="inlineTaskMaterial" type="file" accept=".zip,application/zip">
                       </div>
@@ -6785,6 +6833,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
           <div class="task-upload">
             <span class="task-upload-icon" aria-hidden="true"></span>
             <span class="task-upload-text" id="copyrightTaskFileName">选择文件</span>
+            <button class="task-upload-remove" type="button" id="copyrightTaskFileRemoveBtn" title="删除附件" aria-label="删除附件" hidden></button>
             <span class="task-upload-hint">支持上传 .zip 压缩包，包含视频与配置素材</span>
             <input class="task-file" id="copyrightTaskMaterial" type="file" accept=".zip,application/zip">
           </div>
@@ -7149,6 +7198,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const copyrightTaskCreateBtn = document.getElementById("copyrightTaskCreateBtn");
     const copyrightTaskMaterial = document.getElementById("copyrightTaskMaterial");
     const copyrightTaskFileName = document.getElementById("copyrightTaskFileName");
+    const copyrightTaskFileRemoveBtn = document.getElementById("copyrightTaskFileRemoveBtn");
     const scheduleTaskDialog = document.getElementById("scheduleTaskDialog");
     const scheduleTaskCloseBtn = document.getElementById("scheduleTaskCloseBtn");
     const scheduleTaskCancelBtn = document.getElementById("scheduleTaskCancelBtn");
@@ -7172,6 +7222,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const inlineTaskSinglePanel = document.getElementById("inlineTaskSinglePanel");
     const inlineTaskMaterial = document.getElementById("inlineTaskMaterial");
     const inlineTaskFileName = document.getElementById("inlineTaskFileName");
+    const inlineTaskFileRemoveBtn = document.getElementById("inlineTaskFileRemoveBtn");
     const inlineTaskCronCyclePanel = document.getElementById("inlineTaskCronCyclePanel");
     const inlineTaskResetBtn = document.getElementById("inlineTaskResetBtn");
     const inlineTaskCronCycleDetails = document.querySelectorAll("[data-inline-cycle-detail]");
@@ -7466,12 +7517,22 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 重试配置：超时 ${fieldValue("inlineTaskTimeoutMinutes", "不限")} 分钟，失败重试 ${fieldValue("inlineTaskRetryCount", "0")} 次，间隔 ${fieldValue("inlineTaskRetryInterval", "5")} 分钟`;
     }
 
+    function syncTaskUploadRemoveButton(fileNameNode, removeButton) {
+      if (!fileNameNode || !removeButton) return;
+      removeButton.hidden = !fileNameNode.textContent || fileNameNode.textContent === "选择文件";
+    }
+
+    function clearTaskUpload(fileInput, fileNameNode, removeButton) {
+      if (fileInput) fileInput.value = "";
+      if (fileNameNode) fileNameNode.textContent = "选择文件";
+      syncTaskUploadRemoveButton(fileNameNode, removeButton);
+    }
+
     function resetInlineTaskForm(showResetToast = false) {
       document.getElementById("inlineTaskName").value = "Tiktok上传定时任务";
       document.getElementById("inlineTaskBrowser").selectedIndex = 0;
       document.getElementById("inlineTaskStartTime").value = "";
-      inlineTaskMaterial.value = "";
-      inlineTaskFileName.textContent = "选择文件";
+      clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn);
       if (showResetToast) showToast("已重置任务表单");
     }
 
@@ -8856,6 +8917,8 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         copyrightTaskBrowser.selectedIndex = matched ? matched.index : 0;
       }
       if (copyrightTaskFileName) copyrightTaskFileName.textContent = options.fileName || "选择文件";
+      if (copyrightTaskMaterial) copyrightTaskMaterial.value = "";
+      syncTaskUploadRemoveButton(copyrightTaskFileName, copyrightTaskFileRemoveBtn);
       copyrightTaskDialog.dataset.mode = isEdit ? "edit" : "create";
       populateNumberSelects();
       syncTaskCronCycleDetails();
@@ -9635,9 +9698,21 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     });
     copyrightTaskMaterial.addEventListener("change", () => {
       copyrightTaskFileName.textContent = copyrightTaskMaterial.files?.[0]?.name || "选择文件";
+      syncTaskUploadRemoveButton(copyrightTaskFileName, copyrightTaskFileRemoveBtn);
     });
     inlineTaskMaterial.addEventListener("change", () => {
       inlineTaskFileName.textContent = inlineTaskMaterial.files?.[0]?.name || "选择文件";
+      syncTaskUploadRemoveButton(inlineTaskFileName, inlineTaskFileRemoveBtn);
+    });
+    copyrightTaskFileRemoveBtn?.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      clearTaskUpload(copyrightTaskMaterial, copyrightTaskFileName, copyrightTaskFileRemoveBtn);
+    });
+    inlineTaskFileRemoveBtn?.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn);
     });
     document.querySelectorAll('input[name="taskScheduleMode"]').forEach(input => {
       input.addEventListener("change", () => {
