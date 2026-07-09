@@ -1032,6 +1032,17 @@
       box-shadow: 0 4px 18px rgba(34, 181, 115, .13), 0 0 0 1px rgba(34, 181, 115, .08);
     }
 
+    .acard.inline-panel-selected {
+      border-color: rgba(18, 153, 99, .72);
+      background: linear-gradient(180deg, rgba(238, 250, 244, .98) 0%, rgba(255, 255, 255, .98) 100%);
+      box-shadow: 0 10px 26px rgba(34, 181, 115, .18), 0 0 0 2px rgba(34, 181, 115, .16);
+    }
+
+    .acard.inline-panel-selected:hover {
+      border-color: rgba(18, 153, 99, .82);
+      box-shadow: 0 12px 30px rgba(34, 181, 115, .22), 0 0 0 2px rgba(34, 181, 115, .2);
+    }
+
     .acard.selected:before {
       display: none;
     }
@@ -8192,7 +8203,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 
     function syncAgentCardSelection() {
       document.querySelectorAll(".acard").forEach(card => {
-        card.classList.toggle("selected", card.dataset.agentName === state.drawerAgent);
+        const isSelected = card.dataset.agentName === state.drawerAgent;
+        const isInlinePanelSelected = isSelected && state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden;
+        card.classList.toggle("selected", isSelected);
+        card.classList.toggle("inline-panel-selected", isInlinePanelSelected);
       });
     }
 
@@ -9066,7 +9080,9 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const actionText = agent.group === "training" ? "训练" : isTaskCard ? "新建任务" : isPermissionCard ? (isPendingPermission ? "申请中" : "开通权限") : "进入对话";
       const actionIcon = isTaskCard ? "task" : !isPermissionCard && agent.group !== "training" ? "chat" : "";
       const card = document.createElement("article");
-      card.className = `acard ${agent.group === "training" ? "training" : ""} ${state.drawerAgent === agent.name ? "selected" : ""}`;
+      const isSelected = state.drawerAgent === agent.name;
+      const isInlinePanelSelected = isSelected && state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden;
+      card.className = `acard ${agent.group === "training" ? "training" : ""} ${isSelected ? "selected" : ""} ${isInlinePanelSelected ? "inline-panel-selected" : ""}`;
       card.tabIndex = 0;
       card.dataset.agentName = agent.name;
       card.innerHTML = `
