@@ -1546,6 +1546,7 @@
       display: inline-flex;
       align-items: center;
       min-height: 26px;
+      max-width: 100%;
       padding: 4px 10px;
       border: 1px solid #dfe4e8;
       border-radius: 999px;
@@ -1554,6 +1555,14 @@
       font-size: 12px;
       line-height: 1;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .agent-drawer-skill.st-specialty-0,
+    .agent-drawer-skill.st-specialty-1,
+    .agent-drawer-skill.st-specialty-2 {
+      border-color: transparent;
     }
 
     .agent-drawer-prompts {
@@ -6608,7 +6617,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                 <span class="agent-drawer-tag" id="agentDrawerCategory"></span>
               </div>
               <section class="agent-drawer-section" id="agentDrawerSkillsSection">
-                <h4>支持技能</h4>
+                <h4>我擅长</h4>
                 <div class="agent-drawer-skill-tags" id="agentDrawerSkills"></div>
               </section>
               <section class="agent-drawer-section" id="agentDrawerPromptsSection">
@@ -8311,10 +8320,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
           : actionButtonContent("进入对话", "chat");
       agentDrawerStartBtn.className = `cbtn ${state.drawerRequiresPermission ? `permission${isPendingPermission ? " pending" : ""}` : "primary"}`;
       agentDrawerSkills.innerHTML = "";
-      agentSkills(agent).forEach(skill => {
+      agentCardSpecialtyTags(agent).forEach((skill, index) => {
         const tag = document.createElement("span");
-        tag.className = "agent-drawer-skill";
+        tag.className = `agent-drawer-skill st-specialty-${index}`;
         tag.textContent = skill;
+        tag.title = skill;
         agentDrawerSkills.appendChild(tag);
       });
       agentDrawerPrompts.innerHTML = "";
