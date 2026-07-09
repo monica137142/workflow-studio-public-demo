@@ -8998,15 +8998,27 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         openNewAgentConversation(agent);
       });
       card.addEventListener("click", () => {
-        openAgentDrawer(agent, isPermissionCard);
+        activateAgentCard(agent, isPermissionCard, isTaskCard);
       });
       card.addEventListener("keydown", event => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          openAgentDrawer(agent, isPermissionCard);
+          activateAgentCard(agent, isPermissionCard, isTaskCard);
         }
       });
       return card;
+    }
+
+    function activateAgentCard(agent, isPermissionCard = isPermissionAgent(agent), isTaskCard = isCopyrightTaskAgent(agent)) {
+      if (agent.group === "training" || isPermissionCard) {
+        openAgentDrawer(agent, isPermissionCard);
+        return;
+      }
+      if (isTaskCard) {
+        openNewAgentTask(agent);
+        return;
+      }
+      openNewAgentConversation(agent);
     }
 
     function renderGroup(group, grid, countNode, emptyNode, sectionNode) {
