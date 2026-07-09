@@ -727,6 +727,7 @@
 
     .portal-center-route-shell {
       flex: 1;
+      min-width: 0;
       min-height: 0;
       display: flex;
       flex-direction: column;
@@ -1283,6 +1284,18 @@
       display: none;
     }
 
+    .agent-detail-layer.is-inline-permission {
+      position: relative;
+      inset: auto;
+      z-index: 35;
+      flex: 0 0 420px;
+      width: 420px;
+      min-width: 380px;
+      height: auto;
+      min-height: 0;
+      background: transparent;
+    }
+
     .agent-detail-drawer {
       position: absolute;
       top: 0;
@@ -1296,6 +1309,16 @@
       border-left: 1px solid #e8ebee;
       background: #fff;
       box-shadow: -18px 0 40px rgba(20, 30, 40, .14), -4px 0 12px rgba(20, 30, 40, .06);
+    }
+
+    .agent-detail-layer.is-inline-permission .agent-detail-drawer {
+      position: relative;
+      top: auto;
+      right: auto;
+      width: 100%;
+      min-width: 0;
+      height: 100%;
+      box-shadow: none;
     }
 
     .agent-drawer-head {
@@ -4257,6 +4280,12 @@
     .automation-record-drawer {
       animation: sideDrawerIn .3s cubic-bezier(.18, .78, .22, 1) both;
       will-change: transform, opacity;
+    }
+
+    .agent-detail-layer.is-inline-permission:not([hidden]),
+    .agent-detail-layer.is-inline-permission .agent-detail-drawer {
+      animation: none;
+      will-change: auto;
     }
 
     @keyframes overlayGlassIn {
@@ -8158,14 +8187,29 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     function openAgentDrawer(agent, requiresPermission = false) {
       state.drawerAgent = agent.name;
       state.drawerRequiresPermission = requiresPermission;
+      agentDetailLayer.classList.toggle("is-inline-permission", requiresPermission);
       renderAgentDrawer(agent);
       agentDetailLayer.hidden = false;
       syncAgentCardSelection();
     }
 
+    function toggleAgentDrawer(agent, requiresPermission = false) {
+      if (
+        state.drawerAgent === agent.name &&
+        state.drawerRequiresPermission === requiresPermission &&
+        agentDetailLayer &&
+        !agentDetailLayer.hidden
+      ) {
+        closeAgentDrawer();
+        return;
+      }
+      openAgentDrawer(agent, requiresPermission);
+    }
+
     function closeAgentDrawer() {
       state.drawerAgent = "";
       state.drawerRequiresPermission = false;
+      agentDetailLayer?.classList.remove("is-inline-permission");
       if (agentDetailLayer) agentDetailLayer.hidden = true;
       syncAgentCardSelection();
     }
@@ -8992,7 +9036,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
           return;
         }
         if (isPermissionCard) {
-          openAgentDrawer(agent, true);
+          toggleAgentDrawer(agent, true);
           return;
         }
         openNewAgentConversation(agent);
@@ -9010,7 +9054,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     }
 
     function activateAgentCard(agent, isPermissionCard = isPermissionAgent(agent), isTaskCard = isCopyrightTaskAgent(agent)) {
-      if (agent.group === "training" || isPermissionCard) {
+      if (isPermissionCard) {
+        toggleAgentDrawer(agent, true);
+        return;
+      }
+      if (agent.group === "training") {
         openAgentDrawer(agent, isPermissionCard);
         return;
       }
