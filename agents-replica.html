@@ -4381,6 +4381,17 @@
       background: #d92d20;
     }
 
+    .confirm-btn.danger-outline {
+      border-color: #f04438;
+      background: #fff;
+      color: #d92d20;
+    }
+
+    .confirm-btn.danger-outline:hover {
+      background: #fff5f5;
+      color: #b42318;
+    }
+
     .confirm-btn.success {
       border-color: #22b573;
       background: #22b573;
@@ -7027,7 +7038,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         </div>
       </div>
       <div class="task-modal-actions">
-        <button class="confirm-btn danger" type="button" id="copyrightTaskDeleteBtn" hidden>删除</button>
+        <button class="confirm-btn danger-outline" type="button" id="copyrightTaskDeleteBtn" hidden>删除</button>
         <div class="task-modal-actions-main">
           <button class="confirm-btn" type="button" id="copyrightTaskCancelBtn">取消</button>
           <button class="confirm-btn danger" type="button" id="copyrightTaskCreateBtn">创建任务</button>
@@ -8974,7 +8985,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
           ? "调整自动化任务的执行流程、调度周期、并发策略和异常补偿配置。"
           : "Tiktok上传会根据素材信息生成上传处理任务，并跟进发布校验。";
       }
-      if (copyrightTaskCreateBtn) copyrightTaskCreateBtn.textContent = isEdit ? "保存修改" : "创建任务";
+      if (copyrightTaskCreateBtn) {
+        copyrightTaskCreateBtn.textContent = isEdit ? "保存修改" : "创建任务";
+        copyrightTaskCreateBtn.className = `confirm-btn ${isEdit ? "success" : "danger"}`;
+      }
       if (copyrightTaskDeleteBtn) copyrightTaskDeleteBtn.hidden = !isEdit;
       if (copyrightTaskName) copyrightTaskName.value = options.taskName || "Tiktok上传任务";
       if (copyrightTaskFlow?.options?.[0]) copyrightTaskFlow.options[0].textContent = options.flow || "Tiktok上传";
