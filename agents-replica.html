@@ -5938,12 +5938,15 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                     </div>
                   </div>
                   <div class="task-field">
-                    <label class="task-label">任务参数</label>
+                    <label class="task-label" for="taskDetailMaterial">任务参数</label>
                     <div class="task-upload">
                       <span class="task-upload-icon" aria-hidden="true"></span>
-                      <span class="task-upload-text">tiktok-materials.zip</span>
+                      <span class="task-upload-text" id="taskDetailFileName">tiktok-materials.zip</span>
+                      <button class="task-upload-remove" type="button" id="taskDetailFileRemoveBtn" title="删除附件" aria-label="删除附件"></button>
                       <span class="task-upload-hint">支持上传 .zip 压缩包，包含视频与配置素材</span>
+                      <input class="task-file" id="taskDetailMaterial" type="file" accept=".zip,application/zip">
                     </div>
+                    <button class="task-upload-continue" type="button" id="taskDetailContinueUploadBtn">继续上传</button>
                     <pre class="task-upload-spec">任意目录/
 ├─ tag.txt
 └─ video_001.mp4
@@ -7192,6 +7195,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const taskDetailDesc = document.getElementById("taskDetailDesc");
     const taskDetailNameInput = document.getElementById("taskDetailNameInput");
     const taskDetailFlowSelect = document.getElementById("taskDetailFlowSelect");
+    const taskDetailMaterial = document.getElementById("taskDetailMaterial");
+    const taskDetailFileName = document.getElementById("taskDetailFileName");
+    const taskDetailFileRemoveBtn = document.getElementById("taskDetailFileRemoveBtn");
+    const taskDetailContinueUploadBtn = document.getElementById("taskDetailContinueUploadBtn");
     const taskDetailPrimaryBtn = document.getElementById("taskDetailPrimaryBtn");
     const taskDetailExpandBtn = document.getElementById("taskDetailExpandBtn");
     const taskDetailCollapseBtn = document.getElementById("taskDetailCollapseBtn");
@@ -7875,6 +7882,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         taskDetailNameInput.value = history?.isNewTask ? draftTitle : title;
       }
       if (taskDetailFlowSelect?.options?.[0]) taskDetailFlowSelect.options[0].textContent = flowName;
+      if (taskDetailFileName && document.activeElement !== taskDetailMaterial) {
+        taskDetailFileName.textContent = history?.isNewTask ? "选择文件" : history?.taskFile || "tiktok-materials.zip";
+        if (taskDetailMaterial) taskDetailMaterial.value = "";
+        syncTaskUploadActions(taskDetailFileName, taskDetailFileRemoveBtn, taskDetailContinueUploadBtn);
+      }
       if (taskDetailWorkspace) taskDetailWorkspace.setAttribute("aria-label", `${flowName}任务详情`);
       if (taskDetailRecordTitle) taskDetailRecordTitle.textContent = history?.isNewTask ? "Tiktok上传任务" : title;
       if (!taskDetailLog || !taskDetailLogCount) return;
@@ -9746,6 +9758,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       inlineTaskFileName.textContent = inlineTaskMaterial.files?.[0]?.name || "选择文件";
       syncTaskUploadActions(inlineTaskFileName, inlineTaskFileRemoveBtn, inlineTaskContinueUploadBtn);
     });
+    taskDetailMaterial?.addEventListener("change", () => {
+      taskDetailFileName.textContent = taskDetailMaterial.files?.[0]?.name || "选择文件";
+      syncTaskUploadActions(taskDetailFileName, taskDetailFileRemoveBtn, taskDetailContinueUploadBtn);
+    });
     copyrightTaskFileRemoveBtn?.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
@@ -9756,11 +9772,19 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       event.stopPropagation();
       clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn, inlineTaskContinueUploadBtn);
     });
+    taskDetailFileRemoveBtn?.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+      clearTaskUpload(taskDetailMaterial, taskDetailFileName, taskDetailFileRemoveBtn, taskDetailContinueUploadBtn);
+    });
     copyrightTaskContinueUploadBtn?.addEventListener("click", () => {
       copyrightTaskMaterial?.click();
     });
     inlineTaskContinueUploadBtn?.addEventListener("click", () => {
       inlineTaskMaterial?.click();
+    });
+    taskDetailContinueUploadBtn?.addEventListener("click", () => {
+      taskDetailMaterial?.click();
     });
     document.querySelectorAll('input[name="taskScheduleMode"]').forEach(input => {
       input.addEventListener("change", () => {
