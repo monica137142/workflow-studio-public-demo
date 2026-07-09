@@ -859,19 +859,25 @@
       align-items: center;
       gap: 16px;
       margin: 20px 0;
+      min-width: 0;
     }
 
     .pool-seg {
+      flex: 1 1 auto;
+      min-width: 0;
       display: flex;
       align-items: center;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       gap: 12px;
+      overflow: hidden;
     }
 
     .pool-btn {
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      flex: 0 1 auto;
+      min-width: 0;
       min-height: 32px;
       padding: 6px 14px;
       border: 0;
@@ -881,6 +887,9 @@
       cursor: pointer;
       font-size: 13px;
       font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       box-shadow: none;
       transition: color .13s ease, background-color .13s ease;
     }
@@ -906,10 +915,12 @@
       color: #7b8289;
     }
 
-    .tb-spacer { flex: 1; }
+    .tb-spacer { flex: 0 1 0; }
 
     .search {
+      flex: 0 1 280px;
       width: 280px;
+      min-width: 168px;
       display: flex;
       align-items: center;
       gap: 8px;
@@ -917,7 +928,7 @@
       border: 1px solid #dde1e5;
       border-radius: 10px;
       background: #fff;
-      transition: border-color .15s ease, box-shadow .15s ease;
+      transition: width .15s ease, flex-basis .15s ease, border-color .15s ease, box-shadow .15s ease;
     }
 
     .search:focus-within {
@@ -943,6 +954,43 @@
     }
 
     .search input::placeholder { color: #a5abb1; }
+
+    @media (max-width: 1180px) {
+      .toolbar {
+        gap: 10px;
+      }
+
+      .pool-seg {
+        gap: 8px;
+      }
+
+      .pool-btn {
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .search {
+        flex-basis: 220px;
+        width: 220px;
+        min-width: 148px;
+      }
+    }
+
+    @media (max-width: 1040px) {
+      .search {
+        flex-basis: 168px;
+        width: 168px;
+        min-width: 132px;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .search {
+        display: none;
+      }
+    }
 
     .body.scope-switching .grid,
     .body.scope-switching .empty {
