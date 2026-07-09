@@ -1333,16 +1333,6 @@
       box-shadow: none;
     }
 
-    .agent-detail-layer.is-inline-permission:not([hidden]) {
-      animation: inlinePanelExpandIn .38s cubic-bezier(.16, 1, .3, 1) both;
-      will-change: flex-basis, width, opacity;
-    }
-
-    .agent-detail-layer.is-inline-permission:not([hidden]) .agent-detail-drawer {
-      animation: inlinePanelContentIn .34s cubic-bezier(.16, 1, .3, 1) .04s both;
-      will-change: transform, opacity;
-    }
-
     .agent-drawer-head {
       min-height: 56px;
       display: flex;
@@ -4339,32 +4329,6 @@
       from {
         opacity: .4;
         transform: translateX(32px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
-    }
-
-    @keyframes inlinePanelExpandIn {
-      from {
-        flex-basis: 0;
-        width: 0;
-        min-width: 0;
-        opacity: .2;
-      }
-      to {
-        flex-basis: 420px;
-        width: 420px;
-        min-width: 380px;
-        opacity: 1;
-      }
-    }
-
-    @keyframes inlinePanelContentIn {
-      from {
-        opacity: 0;
-        transform: translateX(28px);
       }
       to {
         opacity: 1;
