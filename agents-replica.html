@@ -1576,6 +1576,34 @@
       color: #7b8289;
     }
 
+    .agent-drawer-action-slot {
+      margin-top: 12px;
+    }
+
+    .agent-drawer-action-slot:empty {
+      display: none;
+    }
+
+    .agent-drawer-action-slot .cbtn {
+      width: 100%;
+      min-height: 38px;
+      justify-content: center;
+    }
+
+    .agent-detail-layer.is-inline-permission .agent-drawer-action-slot .cbtn.permission:not(.pending) {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(34, 181, 115, .18);
+    }
+
+    .agent-detail-layer.is-inline-permission .agent-drawer-action-slot .cbtn.permission:not(.pending):hover {
+      border-color: #1b9c61;
+      background: #1b9c61;
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(34, 181, 115, .22);
+    }
+
     .agent-drawer-tags {
       display: flex;
       flex-wrap: wrap;
@@ -6568,6 +6596,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
               <section class="agent-drawer-section" id="agentDrawerPromptsSection">
                 <h4>试试这样问</h4>
                 <div class="agent-drawer-prompts" id="agentDrawerPrompts"></div>
+                <div class="agent-drawer-action-slot" id="agentDrawerActionSlot"></div>
               </section>
             </div>
           </aside>
@@ -6954,6 +6983,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const agentDetailLayer = document.getElementById("agentDetailLayer");
     const agentDetailDrawer = document.getElementById("agentDetailDrawer");
     const agentDrawerCloseBtn = document.getElementById("agentDrawerCloseBtn");
+    const agentDrawerProfile = document.querySelector(".agent-drawer-profile");
     const agentDrawerAvatar = document.getElementById("agentDrawerAvatar");
     const agentDrawerTitle = document.getElementById("agentDrawerTitle");
     const agentDrawerVersion = document.getElementById("agentDrawerVersion");
@@ -6964,6 +6994,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const agentDrawerSkills = document.getElementById("agentDrawerSkills");
     const agentDrawerPromptsSection = document.getElementById("agentDrawerPromptsSection");
     const agentDrawerPrompts = document.getElementById("agentDrawerPrompts");
+    const agentDrawerActionSlot = document.getElementById("agentDrawerActionSlot");
     const agentDrawerStartBtn = document.getElementById("agentDrawerStartBtn");
     const agentScopeSubtitle = document.getElementById("agentScopeSubtitle");
     const automationScopeSubtitle = document.getElementById("automationScopeSubtitle");
@@ -8196,6 +8227,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const closeLabel = state.drawerRequiresPermission ? "收起侧边栏" : "关闭详情";
       agentDrawerCloseBtn.title = closeLabel;
       agentDrawerCloseBtn.setAttribute("aria-label", closeLabel);
+      if (state.drawerRequiresPermission) {
+        agentDrawerActionSlot.appendChild(agentDrawerStartBtn);
+      } else {
+        agentDrawerProfile.appendChild(agentDrawerStartBtn);
+      }
       agentDrawerSkillsSection.hidden = isTaskAgent;
       agentDrawerPromptsSection.hidden = isTaskAgent;
       agentDrawerStartBtn.innerHTML = state.drawerRequiresPermission
@@ -8212,7 +8248,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         agentDrawerSkills.appendChild(tag);
       });
       agentDrawerPrompts.innerHTML = "";
-      drawerPromptsForAgent(agent).forEach(prompt => {
+      drawerPromptsForAgent(agent).slice(0, 3).forEach(prompt => {
         const button = document.createElement("button");
         button.type = "button";
         button.className = "agent-drawer-prompt";
