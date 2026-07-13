@@ -9958,9 +9958,12 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         const isLargeHistoryAgent = agent.name === "大盘数据分析助手";
         const isExpanded = expandedSessionHistoryAgents.has(agent.name);
         const isHistoryCollapsed = collapsedSessionHistoryAgents.has(agent.name);
-        const previewHistories = isLargeHistoryAgent && isExpanded
+        const inlineTaskPreviewHistories = isInlineTaskChatAgent(agent)
+          ? allHistories.filter(history => history.id !== seededInlineTaskHistory.id)
+          : null;
+        const previewHistories = inlineTaskPreviewHistories || (isLargeHistoryAgent && isExpanded
           ? allHistories
-          : allHistories.slice(0, previewCount);
+          : allHistories.slice(0, previewCount));
         const hiddenHistoryCount = Math.max(0, allHistories.length - previewCount);
         const isChildHistoryActive = allHistories.some(history => history.id === state.activeSessionId);
         const isAgentOpen = state.page === "chat" && state.selected === agent.name && !isChildHistoryActive;
@@ -10017,6 +10020,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
           renderSessions();
         };
         mainBtn?.addEventListener("click", () => {
+          if (isInlineTaskChatAgent(agent)) return;
           if (previewHistories.length) {
             toggleSessionHistory();
             return;
@@ -10025,11 +10029,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
             openTaskCreateForm(agent);
             return;
           }
-          if (activeHistory) {
-            openChat(agent, activeHistory);
-          } else {
-            openNewAgentConversation(agent);
-          }
+          openNewAgentConversation(agent);
         });
         group.querySelector(".session-agent-new-btn")?.addEventListener("click", event => {
           event.stopPropagation();
