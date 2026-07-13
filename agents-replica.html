@@ -248,17 +248,26 @@
     }
 
     .session-agent-group {
-      margin-bottom: 1px;
+      margin-bottom: 2px;
+    }
+
+    .session-history-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin: 0 0 4px;
+      padding: 0 4px 0 34px;
     }
 
     .session-agent-toggle {
       position: relative;
       width: 100%;
-      min-height: 50px;
+      min-height: 40px;
       display: flex;
       align-items: center;
       gap: 4px;
-      padding: 0 6px;
+      padding: 0 5px;
+      margin-bottom: 0;
       border: 0;
       border-radius: 9px;
       background: transparent;
@@ -283,12 +292,12 @@
 
     .session-agent-main {
       min-width: 0;
-      min-height: 42px;
+      min-height: 34px;
       display: inline-flex;
       align-items: center;
       gap: 9px;
       flex: 1 1 auto;
-      padding: 3px 4px;
+      padding: 2px 72px 2px 4px;
       border: 0;
       border-radius: 8px;
       background: transparent;
@@ -301,17 +310,90 @@
       background: transparent;
     }
 
-    .session-agent-avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 8px;
+    .session-agent-new-btn {
+      position: absolute;
+      right: 7px;
+      top: 50%;
+      min-height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+      flex: 0 0 auto;
+      padding: 3px 7px;
+      border: 1px solid var(--color-primary);
+      border-radius: 7px;
+      background: var(--color-primary);
+      color: #fff;
+      cursor: pointer;
       font-size: 12px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(4px, -50%);
+      transition: opacity .13s ease, transform .13s ease, background-color .13s ease, border-color .13s ease;
+    }
+
+    .session-agent-toggle:hover .session-agent-new-btn,
+    .session-agent-new-btn:focus-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translate(0, -50%);
+    }
+
+    .session-agent-new-btn:hover {
+      border-color: #1b9c61;
+      background: #1b9c61;
+      color: #fff;
+    }
+
+    .session-agent-new-btn .btn-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+
+    .session-agent-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      font-size: 13px;
     }
 
     .session-agent-title-row {
-      display: block;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
       max-width: 100%;
       min-width: 0;
+    }
+
+    .session-history-toggle {
+      width: 16px;
+      height: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+      border-radius: 5px;
+      color: #8b9299;
+      cursor: pointer;
+      transition: background-color .13s ease, color .13s ease, transform .13s ease;
+    }
+
+    .session-history-toggle:hover {
+      background: #edf2f6;
+      color: #33383d;
+    }
+
+    .session-history-toggle.collapsed {
+      transform: rotate(-90deg);
+    }
+
+    .session-history-toggle svg {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
     }
 
     .session-item {
@@ -330,6 +412,35 @@
       transition: background-color .13s ease, color .13s ease;
     }
 
+    .session-history-list .session-item {
+      min-height: 28px;
+      padding: 4px 7px;
+      border-radius: 6px;
+      color: #6f767d;
+    }
+
+    .session-more-btn {
+      width: 100%;
+      min-height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 4px 7px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: #6f767d;
+      cursor: pointer;
+      font-size: 12.5px;
+      font-weight: 400;
+      text-align: left;
+    }
+
+    .session-more-btn:hover {
+      background: #f8f9fb;
+      color: #33383d;
+    }
+
     .session-item:hover,
     .session-item.active {
       background: #f8f9fb;
@@ -340,6 +451,11 @@
       background: #f1f5f9;
       color: #33383d;
       font-weight: 400;
+    }
+
+    .session-history-list .session-item.active {
+      background: #e6f8ef;
+      color: #1a1d1f;
     }
 
     .session-item.active:before {
@@ -354,6 +470,10 @@
     .session-item.active .session-item__title {
       color: #33383d;
       font-weight: 500;
+    }
+
+    .session-history-list .session-item.active .session-item__title {
+      color: #1a1d1f;
     }
 
     .session-item__avatar {
@@ -372,10 +492,10 @@
     }
 
     .session-item__avatar.session-agent-avatar {
-      width: 24px;
-      height: 24px;
+      width: 28px;
+      height: 28px;
       border-radius: 8px;
-      font-size: 12px;
+      font-size: 13px;
     }
 
     .session-item__avatar img {
@@ -413,9 +533,9 @@
 
     .session-agent-toggle .session-item__title {
       color: #626970;
-      font-size: 13.5px;
+      font-size: 14px;
       font-weight: 700;
-      line-height: 18px;
+      line-height: 19px;
     }
 
     .session-agent-toggle:hover .session-item__title {
@@ -1383,6 +1503,13 @@
       background: transparent;
     }
 
+    .agent-detail-layer.is-modal-detail {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+    }
+
     .agent-detail-drawer {
       position: absolute;
       top: 0;
@@ -1398,6 +1525,29 @@
       box-shadow: -18px 0 40px rgba(20, 30, 40, .14), -4px 0 12px rgba(20, 30, 40, .06);
     }
 
+    .agent-detail-layer.is-drawer-detail .agent-detail-drawer {
+      width: min(600px, calc(100vw - 48px));
+      min-width: min(600px, calc(100vw - 48px));
+    }
+
+    .agent-detail-layer.is-modal-detail .agent-detail-drawer {
+      position: relative;
+      top: auto;
+      right: auto;
+      width: min(720px, calc(100vw - 64px));
+      min-width: 0;
+      height: min(calc(78vh + 64px), 784px, calc(100vh - 64px));
+      border-left: 0;
+      border-radius: 14px;
+      box-shadow: 0 24px 64px rgba(20, 30, 40, .18), 0 8px 22px rgba(20, 30, 40, .08);
+      animation: agentModalIn .22s cubic-bezier(.18, .78, .22, 1) both;
+    }
+
+    .agent-detail-layer.is-modal-detail.is-permission-detail .agent-detail-drawer {
+      width: min(640px, calc(100vw - 64px));
+      height: min(calc(78vh + 128px), 848px, calc(100vh - 48px));
+    }
+
     .agent-detail-layer.is-inline-permission .agent-detail-drawer {
       position: relative;
       top: auto;
@@ -1409,6 +1559,8 @@
     }
 
     .agent-drawer-head {
+      position: relative;
+      z-index: 6;
       min-height: 56px;
       display: flex;
       align-items: center;
@@ -1416,6 +1568,7 @@
       gap: 12px;
       padding: 14px 16px;
       border-bottom: 1px solid #eef1f3;
+      background: #fff;
     }
 
     .agent-drawer-head h2 {
@@ -1503,6 +1656,17 @@
       min-height: 0;
       overflow: auto;
       padding: 18px 16px;
+    }
+
+    .agent-drawer-sticky-summary {
+      margin-bottom: 14px;
+    }
+
+    .agent-drawer-sticky-summary > h4 {
+      margin: 12px 0 0;
+      color: #33383d;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .agent-drawer-profile {
@@ -1666,8 +1830,169 @@
       color: #7b8289;
     }
 
+    .agent-drawer-brief {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      color: #6b7178;
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    .agent-drawer-brief-block h5 {
+      margin: 0 0 6px;
+      color: #6b7178;
+      font-size: 12.5px;
+      font-weight: 700;
+    }
+
+    .agent-drawer-brief-list {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .agent-drawer-brief-item {
+      color: #6b7178;
+    }
+
+    .agent-drawer-table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e8ebee;
+      border-radius: 10px;
+      background: #fff;
+    }
+
+    .agent-drawer-support-table {
+      width: max-content;
+      min-width: 100%;
+      border-collapse: collapse;
+      color: #6b7178;
+      font-size: 12.5px;
+      line-height: 1.6;
+    }
+
+    .agent-drawer-support-table th,
+    .agent-drawer-support-table td {
+      min-width: 36px;
+      padding: 7px 8px;
+      border-bottom: 1px solid #eef1f3;
+      border-right: 1px solid #eef1f3;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .agent-drawer-support-table th:first-child,
+    .agent-drawer-support-table td:first-child {
+      position: sticky;
+      left: 0;
+      min-width: 104px;
+      background: #fff;
+      color: #6b7178;
+      font-weight: 600;
+      text-align: left;
+      z-index: 1;
+    }
+
+    .agent-drawer-support-table th {
+      background: #f7f8fa;
+      color: #6b7178;
+      font-weight: 700;
+    }
+
+    .agent-drawer-support-table th:first-child {
+      background: #f7f8fa;
+      z-index: 2;
+    }
+
+    .agent-drawer-support-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .agent-drawer-support-table th:last-child,
+    .agent-drawer-support-table td:last-child {
+      border-right: 0;
+    }
+
+    .agent-drawer-manual-link {
+      color: #6b7178;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    .agent-drawer-manual-link:hover {
+      color: #6b7178;
+      text-decoration: underline;
+    }
+
     .agent-drawer-action-slot {
       margin-top: 12px;
+    }
+
+    .agent-detail-layer.is-permission-detail .agent-drawer-body {
+      padding-top: 0;
+      padding-bottom: 36px;
+    }
+
+    .agent-detail-layer.is-permission-detail .agent-drawer-sticky-summary {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      margin: 0 -16px 8px;
+      padding: 12px 16px 8px;
+      background: #fff;
+    }
+
+    .agent-detail-layer.is-permission-detail .agent-drawer-sticky-summary::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      bottom: 0;
+      left: 16px;
+      height: 1px;
+      background: #eef1f3;
+    }
+
+    .agent-detail-layer.is-drawer-detail.is-permission-detail .agent-drawer-body,
+    .agent-detail-layer.is-modal-detail.is-permission-detail .agent-drawer-body {
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+
+    .agent-detail-layer.is-drawer-detail.is-permission-detail .agent-drawer-sticky-summary,
+    .agent-detail-layer.is-modal-detail.is-permission-detail .agent-drawer-sticky-summary {
+      margin-right: -28px;
+      margin-left: -28px;
+      padding-right: 28px;
+      padding-left: 28px;
+    }
+
+    .agent-detail-layer.is-drawer-detail.is-permission-detail .agent-drawer-sticky-summary::after,
+    .agent-detail-layer.is-modal-detail.is-permission-detail .agent-drawer-sticky-summary::after {
+      right: 28px;
+      left: 28px;
+    }
+
+    .agent-detail-layer.is-permission-detail .agent-drawer-action-slot {
+      position: sticky;
+      bottom: 0;
+      z-index: 3;
+      margin: 16px -16px 0;
+      padding: 12px 16px 16px;
+      border-top: 1px solid #eef1f3;
+      background: linear-gradient(180deg, rgba(255,255,255,.92), #fff 28%);
+    }
+
+    .agent-detail-layer.is-modal-detail.is-permission-detail .agent-drawer-action-slot {
+      bottom: 0;
+      margin: 16px -28px 0;
+      padding: 12px 28px 16px;
+      background: #fff;
+    }
+
+    .agent-detail-layer.is-drawer-detail.is-permission-detail .agent-drawer-action-slot {
+      margin: 16px -28px 0;
+      padding: 12px 28px 16px;
     }
 
     .agent-drawer-action-slot:empty {
@@ -1680,14 +2005,34 @@
       justify-content: center;
     }
 
-    .agent-detail-layer.is-inline-permission .agent-drawer-action-slot .cbtn.permission:not(.pending) {
+    .agent-detail-layer.is-permission-detail .agent-drawer-action-slot .cbtn.permission:not(.pending) {
       border-color: var(--color-primary);
       background: var(--color-primary);
       color: #fff;
       box-shadow: 0 8px 18px rgba(34, 181, 115, .18);
     }
 
-    .agent-detail-layer.is-inline-permission .agent-drawer-action-slot .cbtn.permission:not(.pending):hover {
+    .agent-detail-layer.is-permission-detail .agent-drawer-profile .cbtn.permission:not(.pending) {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(34, 181, 115, .18);
+    }
+
+    .agent-detail-layer.is-modal-detail.is-permission-detail .agent-drawer-action-slot .cbtn.permission:not(.pending) {
+      border-color: var(--color-primary);
+      background: var(--color-primary);
+      color: #fff;
+    }
+
+    .agent-detail-layer.is-permission-detail .agent-drawer-action-slot .cbtn.permission:not(.pending):hover {
+      border-color: #1b9c61;
+      background: #1b9c61;
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(34, 181, 115, .22);
+    }
+
+    .agent-detail-layer.is-permission-detail .agent-drawer-profile .cbtn.permission:not(.pending):hover {
       border-color: #1b9c61;
       background: #1b9c61;
       color: #fff;
@@ -2734,30 +3079,6 @@
       border-color: transparent;
       background: transparent;
       line-height: 0;
-    }
-
-    .chat-new-session-btn {
-      height: 32px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 13px;
-      border: 1px solid #bfead7;
-      border-radius: 8px;
-      background: #eefbf5;
-      color: #18965c;
-      cursor: pointer;
-      font-size: 12.5px;
-      font-weight: 600;
-      line-height: 1;
-      white-space: nowrap;
-      transition: border-color .13s ease, background-color .13s ease, color .13s ease;
-    }
-
-    .chat-new-session-btn:hover {
-      border-color: #92d8bc;
-      background: #e2f8ee;
-      color: #137a4c;
     }
 
     .chat-side-panel__close:hover {
@@ -4474,13 +4795,25 @@
       }
     }
 
+    @keyframes agentModalIn {
+      from {
+        opacity: .35;
+        transform: translateY(12px) scale(.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       .agent-detail-layer:not([hidden]),
       .automation-record-layer:not([hidden]),
       .confirm-layer:not([hidden]),
       .task-layer:not([hidden]),
       .agent-detail-drawer,
-      .automation-record-drawer {
+      .automation-record-drawer,
+      .agent-detail-layer.is-modal-detail .agent-detail-drawer {
         animation: none;
       }
     }
@@ -5463,9 +5796,19 @@
       </div>
 
       <section class="nav-group">
-        <button class="nav-item active" type="button" data-nav="agents">
+        <button class="nav-item active" type="button" data-nav="agents" data-agent-view="default">
           <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
-          <span>硅基实习生</span>
+          <span>硅基实习生-分栏</span>
+          <span class="nav-item__tag">11</span>
+        </button>
+        <button class="nav-item" type="button" data-nav="agents" data-agent-view="drawer">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+          <span>硅基实习生-抽屉</span>
+          <span class="nav-item__tag">11</span>
+        </button>
+        <button class="nav-item" type="button" data-nav="agents" data-agent-view="modal">
+          <svg class="nav-item__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6"/></svg>
+          <span>硅基实习生-弹窗</span>
           <span class="nav-item__tag">11</span>
         </button>
         <button class="nav-item" type="button" data-nav="automation">
@@ -5588,9 +5931,6 @@
                     <div class="chat-header__title" id="chatTitle">点墨设计</div>
                     <span class="chat-header__desc" id="chatDesc" hidden></span>
                   </div>
-                </div>
-                <div class="chat-header__actions">
-                  <button class="chat-new-session-btn" type="button" id="chatNewConversationBtn">新建对话</button>
                 </div>
               </header>
               <div class="chat-thread" id="chatThread">
@@ -6773,25 +7113,27 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
               </div>
             </header>
             <div class="agent-drawer-body">
-              <div class="agent-drawer-profile">
-                <div class="agent-drawer-avatar" id="agentDrawerAvatar"></div>
-                <div class="agent-drawer-title">
-                  <h3 id="agentDrawerTitle"></h3>
-                  <div class="agent-drawer-version" id="agentDrawerVersion"></div>
+              <div class="agent-drawer-sticky-summary">
+                <div class="agent-drawer-profile">
+                  <div class="agent-drawer-avatar" id="agentDrawerAvatar"></div>
+                  <div class="agent-drawer-title">
+                    <h3 id="agentDrawerTitle"></h3>
+                    <div class="agent-drawer-version" id="agentDrawerVersion"></div>
+                  </div>
+                  <button class="cbtn primary" type="button" id="agentDrawerStartBtn">进入对话</button>
                 </div>
-                <button class="cbtn primary" type="button" id="agentDrawerStartBtn">进入对话</button>
-              </div>
-              <p class="agent-drawer-intro" id="agentDrawerDesc"></p>
-              <div class="agent-drawer-tags">
-                <span class="agent-drawer-tag" id="agentDrawerStatus"></span>
-                <span class="agent-drawer-tag" id="agentDrawerCategory"></span>
+                <p class="agent-drawer-intro" id="agentDrawerDesc"></p>
+                <div class="agent-drawer-tags">
+                  <span class="agent-drawer-tag" id="agentDrawerStatus"></span>
+                  <span class="agent-drawer-tag" id="agentDrawerCategory"></span>
+                </div>
               </div>
               <section class="agent-drawer-section" id="agentDrawerSkillsSection">
                 <h4>我擅长</h4>
                 <div class="agent-drawer-skill-tags" id="agentDrawerSkills"></div>
               </section>
               <section class="agent-drawer-section" id="agentDrawerPromptsSection">
-                <h4>试试这样问</h4>
+                <h4 id="agentDrawerPromptsTitle">试试这样问</h4>
                 <div class="agent-drawer-prompts" id="agentDrawerPrompts"></div>
                 <div class="agent-drawer-action-slot" id="agentDrawerActionSlot"></div>
               </section>
@@ -7170,7 +7512,26 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 
     const conversationHiddenAgentNames = new Set(["点墨设计", "剧查查", "Google Trends"]);
     const permissionRequestAgentNames = new Set();
-    const state = { page: "agents", scope: "all", category: "all", query: "", selected: "大盘数据分析助手", activeSessionId: "", drawerAgent: "", drawerRequiresPermission: false, automationView: "automation" };
+    const expandedSessionHistoryAgents = new Set();
+    const collapsedSessionHistoryAgents = new Set();
+    const agentViewStates = {
+      default: { scope: "all", category: "all", query: "", drawerAgent: "", drawerRequiresPermission: false },
+      drawer: { scope: "all", category: "all", query: "", drawerAgent: "", drawerRequiresPermission: false },
+      modal: { scope: "all", category: "all", query: "", drawerAgent: "", drawerRequiresPermission: false }
+    };
+    const state = { page: "agents", agentView: "default", selected: "大盘数据分析助手", activeSessionId: "", automationView: "automation" };
+    function activeAgentViewState() {
+      return agentViewStates[state.agentView] || agentViewStates.default;
+    }
+    function isAgentModalView() {
+      return state.agentView === "modal";
+    }
+    function isAgentDrawerView() {
+      return state.agentView === "drawer";
+    }
+    function isAgentInlinePermissionView() {
+      return state.agentView === "default";
+    }
     const routeScrollPositions = new Map();
     const searchInput = document.getElementById("searchInput");
     const servingGrid = document.getElementById("servingGrid");
@@ -7192,9 +7553,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const agentDrawerStatus = document.getElementById("agentDrawerStatus");
     const agentDrawerCategory = document.getElementById("agentDrawerCategory");
     const agentDrawerDesc = document.getElementById("agentDrawerDesc");
+    const agentDrawerStickySummary = document.querySelector(".agent-drawer-sticky-summary");
     const agentDrawerSkillsSection = document.getElementById("agentDrawerSkillsSection");
     const agentDrawerSkills = document.getElementById("agentDrawerSkills");
     const agentDrawerPromptsSection = document.getElementById("agentDrawerPromptsSection");
+    const agentDrawerPromptsTitle = document.getElementById("agentDrawerPromptsTitle");
     const agentDrawerPrompts = document.getElementById("agentDrawerPrompts");
     const agentDrawerActionSlot = document.getElementById("agentDrawerActionSlot");
     const agentDrawerStartBtn = document.getElementById("agentDrawerStartBtn");
@@ -7208,7 +7571,6 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const pageChat = document.getElementById("pageChat");
     const chatTitle = document.getElementById("chatTitle");
     const chatDesc = document.getElementById("chatDesc");
-    const chatNewConversationBtn = document.getElementById("chatNewConversationBtn");
     const chatThread = document.getElementById("chatThread");
     const chatInput = document.getElementById("chatInput");
     const chatRoot = document.getElementById("chatRoot");
@@ -7791,7 +8153,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     }
 
     function agentInScope(agent) {
-      return state.scope === "all" || agent.group === "serving";
+      return activeAgentViewState().scope === "all" || agent.group === "serving";
     }
 
     function isPermissionAgent(agent) {
@@ -7809,7 +8171,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       permissionRequestAgentNames.add(agent.name);
       showToast("申请已提交，请等候批准");
       render();
-      if (state.drawerAgent === agent.name) renderAgentDrawer(agent);
+      if (activeAgentViewState().drawerAgent === agent.name) renderAgentDrawer(agent);
     }
 
     function isCopyrightTaskAgent(agent) {
@@ -8192,7 +8554,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 
     function syncAgentScopeSubtitle() {
       if (!agentScopeSubtitle) return;
-      agentScopeSubtitle.textContent = state.scope === "mine"
+      agentScopeSubtitle.textContent = activeAgentViewState().scope === "mine"
         ? "你的私人工作流，即刻开工"
         : "发现适合的实习生，让每项任务都有最佳助手";
     }
@@ -8267,6 +8629,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       routeShell.scrollTo({ top: Math.max(0, nextTop), behavior: "smooth" });
     }
 
+    function routeScrollKey(page = state.page, agentView = state.agentView) {
+      return page === "agents" ? `agents:${agentView || "default"}` : page;
+    }
+
     function scrollAgentCardToViewCenter(agentName, behavior = "auto") {
       if (!routeShell || !agentName) return;
       const card = Array.from(document.querySelectorAll(".acard")).find(item => item.dataset.agentName === agentName);
@@ -8277,18 +8643,18 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const maxTop = Math.max(0, routeShell.scrollHeight - routeShell.clientHeight);
       const nextTop = Math.min(maxTop, Math.max(0, routeShell.scrollTop + cardRect.top - desiredTop));
       routeShell.scrollTo({ top: nextTop, behavior });
-      routeScrollPositions.set("agents", nextTop);
+      routeScrollPositions.set(routeScrollKey("agents"), nextTop);
       updateGlobalScrollThumb(routeShell);
     }
 
-    function saveRouteScroll(page = state.page) {
+    function saveRouteScroll(page = state.page, agentView = state.agentView) {
       if (!routeShell || !page) return;
-      routeScrollPositions.set(page, routeShell.scrollTop);
+      routeScrollPositions.set(routeScrollKey(page, agentView), routeShell.scrollTop);
     }
 
-    function restoreRouteScroll(page) {
+    function restoreRouteScroll(page, agentView = state.agentView) {
       if (!routeShell || !page) return;
-      routeShell.scrollTop = routeScrollPositions.get(page) || 0;
+      routeShell.scrollTop = routeScrollPositions.get(routeScrollKey(page, agentView)) || 0;
       if (page === "automation") setAutomationView(state.automationView);
     }
 
@@ -8418,7 +8784,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       ];
       const timePool = ["30分钟前", "1天前", "3天前", "5天前", "1周前", "9天前", "12天前", "2周前"];
       const seed = Array.from(agent.name).reduce((sum, char) => sum + char.charCodeAt(0), 0);
-      const count = agent.name === "大盘数据分析助手" ? 8 : 2 + (seed % 2);
+      const count = agent.name === "大盘数据分析助手" ? 7 : 2 + (seed % 2);
       const createdHistories = createdSessionHistories
         .filter(history => history.agentName === agent.name)
         .map(history => ({
@@ -8447,6 +8813,12 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       return histories.find(history => history.id === state.activeSessionId) || histories[0] || null;
     }
 
+    function sessionHistoryPreviewCount(agent) {
+      if (agent.name === "大盘数据分析助手") return 3;
+      const seed = Array.from(`${agent.name}-history-preview`).reduce((sum, char) => sum + char.charCodeAt(0), 0);
+      return seed % 4;
+    }
+
     function sourceCreatedHistory(history) {
       if (history?.id === seededInlineTaskHistory.id) return seededInlineTaskHistory;
       return createdSessionHistories.find(item => item.id === history?.id) || history;
@@ -8459,7 +8831,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     function setActiveNav(page) {
       const navMap = { agents: "agents", automation: "automation", connections: "connections", skill: "skill" };
       document.querySelectorAll("[data-nav]").forEach(btn => {
-        btn.classList.toggle("active", btn.dataset.nav === navMap[page]);
+        const isAgentViewNav = btn.dataset.nav === "agents" && btn.dataset.agentView;
+        const isActive = isAgentViewNav
+          ? page === "agents" && btn.dataset.agentView === state.agentView
+          : btn.dataset.nav === navMap[page];
+        btn.classList.toggle("active", isActive);
       });
     }
 
@@ -8486,15 +8862,102 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     }
 
     function syncAgentCardSelection() {
+      const viewState = activeAgentViewState();
       document.querySelectorAll(".acard").forEach(card => {
-        const isSelected = card.dataset.agentName === state.drawerAgent;
-        const isInlinePanelSelected = isSelected && state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden;
+        const isSelected = card.dataset.agentName === viewState.drawerAgent;
+        const isInlinePanelSelected = isSelected && viewState.drawerRequiresPermission && isAgentInlinePermissionView() && agentDetailLayer && !agentDetailLayer.hidden;
         card.classList.toggle("selected", isSelected);
         card.classList.toggle("inline-panel-selected", isInlinePanelSelected);
       });
     }
 
+    function syncAgentControls() {
+      const viewState = activeAgentViewState();
+      document.querySelectorAll("[data-agent-view]").forEach(button => {
+        button.classList.toggle("active", button.dataset.agentView === state.agentView);
+      });
+      document.querySelectorAll("[data-agent-scope]").forEach(button => {
+        button.classList.toggle("active", button.dataset.agentScope === viewState.scope);
+      });
+      document.querySelectorAll("[data-filter]").forEach(button => {
+        button.classList.toggle("active", button.dataset.filter === viewState.category);
+      });
+      if (searchInput && searchInput.value !== viewState.query) {
+        searchInput.value = viewState.query;
+      }
+      syncAgentScopeSubtitle();
+    }
+
+    function renderRankingAgentBrief() {
+      const capabilities = [
+        "🎬 输入剧名，查询它在主流流媒体平台的最新排名情况",
+        "🌐 覆盖 Netflix、WeTV 等平台，并支持按不同国家/地区查看榜单",
+        "📊 支持查看作品上榜平台、上榜地区、榜单类型与当前名次，便于做横向比较与热度追踪",
+        "📅 可用于了解某部剧/电影最近是否上榜、上升还是下降，以及不同市场的表现差异"
+      ];
+      const scenarios = [
+        "🎯 新剧上线后，快速了解它在各平台、各地区的热度表现",
+        "📈 内容、发行、运营团队跟踪某部作品的传播声量与项目复盘",
+        "🧭 对比同档期作品在不同平台/地区的榜单表现",
+        "🔍 查询某部剧当前在哪些国家/地区进入榜单"
+      ];
+      const regions = ["TH", "MY", "ID", "TW", "US", "HK", "KR", "VN", "PH", "JP", "SG"];
+      const platforms = [
+        ["IQIYI", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅"],
+        ["WeTV", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "-", "✅"],
+        ["Youku", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅"],
+        ["Netflix", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅", "✅"],
+        ["Prime Video", "✅", "✅", "✅", "-", "✅", "-", "-", "-", "✅", "✅", "✅"],
+        ["HBO Max", "✅", "✅", "✅", "✅", "✅", "✅", "-", "-", "✅", "-", "✅"],
+        ["Disney+", "-", "-", "-", "✅", "✅", "-", "✅", "-", "-", "✅", "-"],
+        ["Viu", "✅", "-", "✅", "-", "-", "✅", "-", "-", "✅", "-", "✅"],
+        ["Hulu", "-", "-", "-", "-", "✅", "-", "-", "-", "-", "✅", "-"],
+        ["TrueID", "✅", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+        ["Vidio", "-", "-", "✅", "-", "-", "-", "-", "-", "-", "-", "-"],
+        ["Hami Video", "-", "-", "-", "✅", "-", "-", "-", "-", "-", "-", "-"],
+        ["MyVideo", "-", "-", "-", "✅", "-", "-", "-", "-", "-", "-", "-"],
+        ["U-Next", "-", "-", "-", "-", "-", "-", "-", "-", "-", "✅", "-"],
+        ["Wavve", "-", "-", "-", "-", "-", "-", "✅", "-", "-", "-", "-"],
+        ["friDay", "-", "-", "-", "✅", "-", "-", "-", "-", "-", "-", "-"],
+        ["Viki", "-", "-", "-", "-", "✅", "-", "-", "-", "-", "-", "-"],
+        ["LINE TV", "-", "-", "-", "✅", "-", "-", "-", "-", "-", "-", "-"],
+        ["MOA", "-", "-", "-", "-", "-", "-", "✅", "-", "-", "-", "-"],
+        ["Monomax", "✅", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"],
+        ["FPT Play", "-", "-", "-", "-", "-", "-", "-", "✅", "-", "-", "-"]
+      ];
+      const listHtml = items => items.map(item => `<div class="agent-drawer-brief-item">${escapeHtml(item)}</div>`).join("");
+      const headHtml = `<tr><th>平台</th>${regions.map(region => `<th>${region}</th>`).join("")}</tr>`;
+      const bodyHtml = platforms.map(row => `<tr><td>${escapeHtml(row[0])}</td>${row.slice(1).map(value => `<td>${value}</td>`).join("")}</tr>`).join("");
+      return `
+        <div class="agent-drawer-brief">
+          <div class="agent-drawer-brief-block">
+            <h5>核心能力</h5>
+            <div class="agent-drawer-brief-list">${listHtml(capabilities)}</div>
+          </div>
+          <div class="agent-drawer-brief-block">
+            <h5>适用场景</h5>
+            <div class="agent-drawer-brief-list">${listHtml(scenarios)}</div>
+          </div>
+          <div class="agent-drawer-brief-block">
+            <h5>支持平台和地区：</h5>
+            <div class="agent-drawer-table-wrap">
+              <table class="agent-drawer-support-table">
+                <thead>${headHtml}</thead>
+                <tbody>${bodyHtml}</tbody>
+              </table>
+            </div>
+          </div>
+          <div class="agent-drawer-brief-block">
+            <h5>使用手册</h5>
+            <a class="agent-drawer-manual-link" href="https://iq.feishu.cn/docx/R9mCduwDuooveoxjwBjcwan5n0D" target="_blank" rel="noopener noreferrer">剧查查使用建议</a>
+          </div>
+        </div>
+      `;
+    }
+
     function renderAgentDrawer(agent) {
+      const viewState = activeAgentViewState();
+      const isInlinePermission = viewState.drawerRequiresPermission && isAgentInlinePermissionView();
       agentDrawerAvatar.classList.toggle("task-agent-avatar", isLightBlueTaskAvatarAgent(agent));
       agentDrawerAvatar.innerHTML = agent.logo ? `<img src="${agent.logo}" alt="${agent.name}">` : firstLetter(agent.name);
       agentDrawerTitle.textContent = agent.name;
@@ -8504,22 +8967,26 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       agentDrawerDesc.textContent = clean(agent.desc);
       const isTaskAgent = isCopyrightTaskAgent(agent);
       const isPendingPermission = hasPendingPermissionRequest(agent);
-      const closeLabel = state.drawerRequiresPermission ? "收起侧边栏" : "关闭详情";
+      const closeLabel = isInlinePermission ? "收起侧边栏" : "关闭详情";
       agentDrawerCloseBtn.title = closeLabel;
       agentDrawerCloseBtn.setAttribute("aria-label", closeLabel);
-      if (state.drawerRequiresPermission) {
-        agentDrawerActionSlot.appendChild(agentDrawerStartBtn);
-      } else {
-        agentDrawerProfile.appendChild(agentDrawerStartBtn);
-      }
-      agentDrawerSkillsSection.hidden = isTaskAgent;
+      agentDrawerProfile.appendChild(agentDrawerStartBtn);
+      agentDrawerSkillsSection.hidden = isTaskAgent || viewState.drawerRequiresPermission;
       agentDrawerPromptsSection.hidden = isTaskAgent;
-      agentDrawerStartBtn.innerHTML = state.drawerRequiresPermission
+      if (agentDrawerPromptsTitle) {
+        agentDrawerPromptsTitle.textContent = viewState.drawerRequiresPermission ? "简介" : "试试这样问";
+        if (viewState.drawerRequiresPermission) {
+          agentDrawerStickySummary?.appendChild(agentDrawerPromptsTitle);
+        } else {
+          agentDrawerPromptsSection?.insertBefore(agentDrawerPromptsTitle, agentDrawerPrompts);
+        }
+      }
+      agentDrawerStartBtn.innerHTML = viewState.drawerRequiresPermission
         ? actionButtonContent(isPendingPermission ? "申请中" : "开通权限")
         : isTaskAgent
           ? actionButtonContent("新建任务", "task")
           : actionButtonContent("进入对话", "chat");
-      agentDrawerStartBtn.className = `cbtn ${state.drawerRequiresPermission ? `permission${isPendingPermission ? " pending" : ""}` : "primary"}`;
+      agentDrawerStartBtn.className = `cbtn ${viewState.drawerRequiresPermission ? `permission${isPendingPermission ? " pending" : ""}` : "primary"}`;
       agentDrawerSkills.innerHTML = "";
       agentCardSpecialtyTags(agent).forEach((skill, index) => {
         const tag = document.createElement("span");
@@ -8529,13 +8996,17 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         agentDrawerSkills.appendChild(tag);
       });
       agentDrawerPrompts.innerHTML = "";
+      if (viewState.drawerRequiresPermission) {
+        agentDrawerPrompts.innerHTML = renderRankingAgentBrief();
+        return;
+      }
       drawerPromptsForAgent(agent).slice(0, 3).forEach(prompt => {
         const button = document.createElement("button");
         button.type = "button";
         button.className = "agent-drawer-prompt";
         button.textContent = prompt.value;
-        button.disabled = state.drawerRequiresPermission;
-        if (state.drawerRequiresPermission) {
+        button.disabled = viewState.drawerRequiresPermission;
+        if (viewState.drawerRequiresPermission) {
           agentDrawerPrompts.appendChild(button);
           return;
         }
@@ -8551,21 +9022,26 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     }
 
     function openAgentDrawer(agent, requiresPermission = false) {
-      state.drawerAgent = agent.name;
-      state.drawerRequiresPermission = requiresPermission;
-      agentDetailLayer.classList.toggle("is-inline-permission", requiresPermission);
+      const viewState = activeAgentViewState();
+      viewState.drawerAgent = agent.name;
+      viewState.drawerRequiresPermission = requiresPermission;
+      agentDetailLayer.classList.toggle("is-inline-permission", requiresPermission && isAgentInlinePermissionView());
+      agentDetailLayer.classList.toggle("is-permission-detail", requiresPermission);
+      agentDetailLayer.classList.toggle("is-drawer-detail", isAgentDrawerView());
+      agentDetailLayer.classList.toggle("is-modal-detail", isAgentModalView());
       renderAgentDrawer(agent);
       agentDetailLayer.hidden = false;
       syncAgentCardSelection();
-      if (requiresPermission) {
+      if (requiresPermission && isAgentInlinePermissionView()) {
         requestAnimationFrame(() => scrollAgentCardToViewCenter(agent.name));
       }
     }
 
     function toggleAgentDrawer(agent, requiresPermission = false) {
+      const viewState = activeAgentViewState();
       if (
-        state.drawerAgent === agent.name &&
-        state.drawerRequiresPermission === requiresPermission &&
+        viewState.drawerAgent === agent.name &&
+        viewState.drawerRequiresPermission === requiresPermission &&
         agentDetailLayer &&
         !agentDetailLayer.hidden
       ) {
@@ -8576,9 +9052,13 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     }
 
     function closeAgentDrawer() {
-      state.drawerAgent = "";
-      state.drawerRequiresPermission = false;
+      const viewState = activeAgentViewState();
+      viewState.drawerAgent = "";
+      viewState.drawerRequiresPermission = false;
       agentDetailLayer?.classList.remove("is-inline-permission");
+      agentDetailLayer?.classList.remove("is-permission-detail");
+      agentDetailLayer?.classList.remove("is-drawer-detail");
+      agentDetailLayer?.classList.remove("is-modal-detail");
       if (agentDetailLayer) agentDetailLayer.hidden = true;
       syncAgentCardSelection();
     }
@@ -9339,23 +9819,25 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     }
 
     function filtered(group) {
-      const q = normalize(state.query);
+      const viewState = activeAgentViewState();
+      const q = normalize(viewState.query);
       return agents.filter(agent => {
         const scopeMatch = agentInScope(agent);
         const groupMatch = agent.group === group;
-        const permissionMatch = state.scope !== "mine" || !isPermissionAgent(agent);
-        const categoryMatch = state.category === "all" || agentCategory(agent) === state.category;
+        const permissionMatch = viewState.scope !== "mine" || !isPermissionAgent(agent);
+        const categoryMatch = viewState.category === "all" || agentCategory(agent) === viewState.category;
         const queryMatch = !q || normalize(agent.name + " " + agent.version + " " + agent.desc).includes(q);
         return scopeMatch && groupMatch && permissionMatch && categoryMatch && queryMatch;
       });
     }
 
     function countAgentsForCategory(category) {
-      const q = normalize(state.query);
+      const viewState = activeAgentViewState();
+      const q = normalize(viewState.query);
       return agents.filter(agent => {
         const scopeMatch = agentInScope(agent);
         const groupMatch = agent.group === "serving";
-        const permissionMatch = state.scope !== "mine" || !isPermissionAgent(agent);
+        const permissionMatch = viewState.scope !== "mine" || !isPermissionAgent(agent);
         const categoryMatch = category === "all" || agentCategory(agent) === category;
         const queryMatch = !q || normalize(agent.name + " " + agent.version + " " + agent.desc).includes(q);
         return scopeMatch && groupMatch && permissionMatch && categoryMatch && queryMatch;
@@ -9385,8 +9867,9 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         .map((tag, index) => `<span class="st-tag st-specialty-${index}" title="${escapeHtml(tag)}">${escapeHtml(tag)}</span>`)
         .join("");
       const card = document.createElement("article");
-      const isSelected = state.drawerAgent === agent.name;
-      const isInlinePanelSelected = isSelected && state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden;
+      const viewState = activeAgentViewState();
+      const isSelected = viewState.drawerAgent === agent.name;
+      const isInlinePanelSelected = isSelected && viewState.drawerRequiresPermission && isAgentInlinePermissionView() && agentDetailLayer && !agentDetailLayer.hidden;
       card.className = `acard ${agent.group === "training" ? "training" : ""} ${isSelected ? "selected" : ""} ${isInlinePanelSelected ? "inline-panel-selected" : ""}`;
       card.tabIndex = 0;
       card.dataset.agentName = agent.name;
@@ -9448,6 +9931,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         openNewAgentTask(agent);
         return;
       }
+      if (isAgentDrawerView() || isAgentModalView()) {
+        toggleAgentDrawer(agent, false);
+        return;
+      }
       openNewAgentConversation(agent);
     }
 
@@ -9466,9 +9953,43 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       agents.filter(isConversationAgent).forEach(agent => {
         const group = document.createElement("div");
         const activeHistory = activeHistoryFor(agent);
+        const allHistories = visibleSessionHistories(agent);
+        const previewCount = sessionHistoryPreviewCount(agent);
+        const isLargeHistoryAgent = agent.name === "大盘数据分析助手";
+        const isExpanded = expandedSessionHistoryAgents.has(agent.name);
+        const isHistoryCollapsed = collapsedSessionHistoryAgents.has(agent.name);
+        const previewHistories = isLargeHistoryAgent && isExpanded
+          ? allHistories
+          : allHistories.slice(0, previewCount);
+        const hiddenHistoryCount = Math.max(0, allHistories.length - previewCount);
+        const isChildHistoryActive = allHistories.some(history => history.id === state.activeSessionId);
+        const isAgentOpen = state.page === "chat" && state.selected === agent.name && !isChildHistoryActive;
+        const isTaskAgent = isCopyrightTaskAgent(agent);
         const buttonLabel = isCopyrightTaskAgent(agent) ? `打开${agent.name}创建表单` : `打开${agent.name}上一次会话`;
-        const versionText = agent.version || (agent.group === "training" ? "候选版本" : "正式版本");
-        group.className = `session-agent-group ${state.page === "chat" && state.selected === agent.name ? "open" : ""}`;
+        const newButtonLabel = isTaskAgent ? `新建${agent.name}任务` : `新建${agent.name}会话`;
+        const historyToggleHtml = previewHistories.length
+          ? `<span class="session-history-toggle ${isHistoryCollapsed ? "collapsed" : ""}" data-history-toggle="${escapeHtml(agent.name)}" title="${isHistoryCollapsed ? "展开会话历史" : "收起会话历史"}" aria-label="${isHistoryCollapsed ? `展开${escapeHtml(agent.name)}会话历史` : `收起${escapeHtml(agent.name)}会话历史`}">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </span>`
+          : "";
+        const historyHtml = !isHistoryCollapsed && previewHistories.length
+          ? `<div class="session-history-list">${previewHistories.map(history => `
+              <div class="session-item ${state.page === "chat" && state.selected === agent.name && state.activeSessionId === history.id ? "active" : ""}" role="button" tabindex="0" data-session-id="${escapeHtml(history.id)}" title="${escapeHtml(history.title)}">
+                <span class="session-item__body">
+                  <span class="session-item__title">${escapeHtml(history.title)}</span>
+                </span>
+                <span class="session-item__side">
+                  <span class="session-item__time">${escapeHtml(history.time || "")}</span>
+                  <button class="session-delete-btn" type="button" data-delete-session-id="${escapeHtml(history.id)}" title="删除" aria-label="删除「${escapeHtml(history.title)}」">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v5"/><path d="M14 11v5"/></svg>
+                  </button>
+                </span>
+              </div>
+            `).join("")}${isLargeHistoryAgent && hiddenHistoryCount > 0 ? `
+              <button class="session-more-btn" type="button" data-session-more="${escapeHtml(agent.name)}">${isExpanded ? "收起" : `更多（${hiddenHistoryCount}）`}</button>
+            ` : ""}</div>`
+          : "";
+        group.className = `session-agent-group ${isAgentOpen ? "open" : ""}`;
         group.innerHTML = `
           <div class="session-agent-toggle">
             <button class="session-agent-main" type="button" aria-label="${buttonLabel}">
@@ -9476,14 +9997,30 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
               <span class="session-item__body">
                 <span class="session-agent-title-row">
                   <span class="session-item__title" title="${agent.name}">${agent.name}</span>
+                  ${historyToggleHtml}
                 </span>
-                <span class="session-item__meta" title="${versionText}">${versionText}</span>
               </span>
             </button>
+            <button class="session-agent-new-btn" type="button" aria-label="${newButtonLabel}" title="${newButtonLabel}">
+              ${actionButtonContent("新建", "plus")}
+            </button>
           </div>
+          ${historyHtml}
         `;
         const mainBtn = group.querySelector(".session-agent-main");
+        const toggleSessionHistory = () => {
+          if (collapsedSessionHistoryAgents.has(agent.name)) {
+            collapsedSessionHistoryAgents.delete(agent.name);
+          } else {
+            collapsedSessionHistoryAgents.add(agent.name);
+          }
+          renderSessions();
+        };
         mainBtn?.addEventListener("click", () => {
+          if (previewHistories.length) {
+            toggleSessionHistory();
+            return;
+          }
           if (isCopyrightTaskAgent(agent)) {
             openTaskCreateForm(agent);
             return;
@@ -9494,11 +10031,51 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
             openNewAgentConversation(agent);
           }
         });
+        group.querySelector(".session-agent-new-btn")?.addEventListener("click", event => {
+          event.stopPropagation();
+          if (isTaskAgent) {
+            openTaskCreateForm(agent);
+            return;
+          }
+          openNewAgentConversation(agent);
+        });
+        group.querySelector("[data-history-toggle]")?.addEventListener("click", event => {
+          event.stopPropagation();
+          toggleSessionHistory();
+        });
+        group.querySelectorAll("[data-session-id]").forEach(button => {
+          button.addEventListener("click", () => {
+            const history = allHistories.find(item => item.id === button.dataset.sessionId);
+            if (history) openChat(agent, history);
+          });
+          button.addEventListener("keydown", event => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            const history = allHistories.find(item => item.id === button.dataset.sessionId);
+            if (history) openChat(agent, history);
+          });
+        });
+        group.querySelectorAll("[data-delete-session-id]").forEach(button => {
+          button.addEventListener("click", event => {
+            event.stopPropagation();
+            const history = allHistories.find(item => item.id === button.dataset.deleteSessionId);
+            if (history) openDeleteConfirm(agent, history);
+          });
+        });
+        group.querySelector("[data-session-more]")?.addEventListener("click", () => {
+          if (expandedSessionHistoryAgents.has(agent.name)) {
+            expandedSessionHistoryAgents.delete(agent.name);
+          } else {
+            expandedSessionHistoryAgents.add(agent.name);
+          }
+          renderSessions();
+        });
         sessionList.appendChild(group);
       });
     }
 
     function render() {
+      syncAgentControls();
       updateFilterCounts();
       renderGroup("serving", servingGrid, servingCount, servingEmpty, servingSection);
       trainingGrid.innerHTML = "";
@@ -9506,24 +10083,39 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       trainingEmpty.hidden = true;
       trainingSection.hidden = true;
       renderSessions();
-      if (state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden) {
-        requestAnimationFrame(() => scrollAgentCardToViewCenter(state.drawerAgent));
+      const viewState = activeAgentViewState();
+      if (viewState.drawerRequiresPermission && isAgentInlinePermissionView() && agentDetailLayer && !agentDetailLayer.hidden) {
+        requestAnimationFrame(() => scrollAgentCardToViewCenter(viewState.drawerAgent));
       }
     }
 
+    document.querySelectorAll("[data-agent-view]").forEach(button => {
+      button.addEventListener("click", () => {
+        if (state.agentView === button.dataset.agentView) return;
+        const previousAgentView = state.agentView;
+        const isAgentsPageActive = state.page === "agents";
+        if (isAgentsPageActive) saveRouteScroll("agents", previousAgentView);
+        closeAgentDrawer();
+        state.agentView = button.dataset.agentView;
+        if (!isAgentsPageActive) return;
+        render();
+        requestAnimationFrame(() => restoreRouteScroll("agents", state.agentView));
+        animateAgentContent();
+      });
+    });
+
     document.querySelectorAll("[data-filter]").forEach(button => {
       button.addEventListener("click", () => {
-        state.category = button.dataset.filter;
-        document.querySelectorAll("[data-filter]").forEach(btn => btn.classList.toggle("active", btn === button));
+        activeAgentViewState().category = button.dataset.filter;
         render();
       });
     });
 
     document.querySelectorAll("[data-agent-scope]").forEach(button => {
       button.addEventListener("click", () => {
-        if (state.scope === button.dataset.agentScope) return;
-        state.scope = button.dataset.agentScope;
-        document.querySelectorAll("[data-agent-scope]").forEach(btn => btn.classList.toggle("active", btn === button));
+        const viewState = activeAgentViewState();
+        if (viewState.scope === button.dataset.agentScope) return;
+        viewState.scope = button.dataset.agentScope;
         syncAgentScopeSubtitle();
         render();
         animateAgentContent();
@@ -9636,21 +10228,26 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 
     document.querySelectorAll("[data-nav]").forEach(button => {
       button.addEventListener("click", () => {
+        if (button.dataset.agentView && state.agentView !== button.dataset.agentView) {
+          closeAgentDrawer();
+          state.agentView = button.dataset.agentView;
+        }
         showPage(button.dataset.nav);
       });
     });
 
     searchInput.addEventListener("input", event => {
-      state.query = event.target.value;
+      activeAgentViewState().query = event.target.value;
       render();
     });
     agentDrawerCloseBtn.addEventListener("click", closeAgentDrawer);
     agentDetailLayer.addEventListener("click", closeAgentDrawer);
     agentDetailDrawer.addEventListener("click", event => event.stopPropagation());
     agentDrawerStartBtn.addEventListener("click", () => {
-      const agent = agents.find(item => item.name === state.drawerAgent);
+      const viewState = activeAgentViewState();
+      const agent = agents.find(item => item.name === viewState.drawerAgent);
       if (!agent) return;
-      if (state.drawerRequiresPermission) {
+      if (viewState.drawerRequiresPermission) {
         submitPermissionRequest(agent);
         return;
       }
@@ -9690,9 +10287,6 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     document.getElementById("logoutBtn").addEventListener("click", () => {
       showToast("已返回登录入口");
       closeUserMenu();
-    });
-    chatNewConversationBtn?.addEventListener("click", () => {
-      openNewAgentConversation(selectedAgent());
     });
     chatSidePanelCloseBtn.addEventListener("click", closeChatSplitView);
     chatSidePanelAllTasksBtn?.addEventListener("click", () => {
