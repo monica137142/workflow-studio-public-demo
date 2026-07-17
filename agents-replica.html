@@ -1089,17 +1089,6 @@
       box-shadow: 0 4px 18px rgba(34, 181, 115, .13), 0 0 0 1px rgba(34, 181, 115, .08);
     }
 
-    .acard.inline-panel-selected {
-      border-color: var(--color-primary);
-      background: #fff;
-      box-shadow: 0 8px 22px rgba(34, 181, 115, .14), 0 0 0 3px rgba(34, 181, 115, .2);
-    }
-
-    .acard.inline-panel-selected:hover {
-      border-color: var(--color-primary);
-      box-shadow: 0 10px 26px rgba(34, 181, 115, .17), 0 0 0 3px rgba(34, 181, 115, .24);
-    }
-
     .acard.selected:before {
       display: none;
     }
@@ -1370,19 +1359,6 @@
       display: none;
     }
 
-    .agent-detail-layer.is-inline-permission {
-      position: relative;
-      inset: auto;
-      z-index: 35;
-      flex: 0 0 420px;
-      width: 420px;
-      min-width: 380px;
-      height: auto;
-      min-height: 0;
-      overflow: hidden;
-      background: transparent;
-    }
-
     .agent-detail-drawer {
       position: absolute;
       top: 0;
@@ -1396,16 +1372,6 @@
       border-left: 1px solid #e8ebee;
       background: #fff;
       box-shadow: -18px 0 40px rgba(20, 30, 40, .14), -4px 0 12px rgba(20, 30, 40, .06);
-    }
-
-    .agent-detail-layer.is-inline-permission .agent-detail-drawer {
-      position: relative;
-      top: auto;
-      right: auto;
-      width: 100%;
-      min-width: 0;
-      height: 100%;
-      box-shadow: none;
     }
 
     .agent-drawer-head {
@@ -1481,21 +1447,6 @@
       width: 17px;
       height: 17px;
       stroke-width: 1.2;
-    }
-
-    .agent-detail-layer.is-inline-permission .agent-drawer-close {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .agent-detail-layer.is-inline-permission .agent-drawer-close::before,
-    .agent-detail-layer.is-inline-permission .agent-drawer-close::after {
-      display: none;
-    }
-
-    .agent-detail-layer.is-inline-permission .agent-drawer-close svg {
-      display: block;
     }
 
     .agent-drawer-body {
@@ -1680,14 +1631,14 @@
       justify-content: center;
     }
 
-    .agent-detail-layer.is-inline-permission .agent-drawer-action-slot .cbtn.permission:not(.pending) {
+    .agent-drawer-action-slot .cbtn.permission:not(.pending) {
       border-color: var(--color-primary);
       background: var(--color-primary);
       color: #fff;
       box-shadow: 0 8px 18px rgba(34, 181, 115, .18);
     }
 
-    .agent-detail-layer.is-inline-permission .agent-drawer-action-slot .cbtn.permission:not(.pending):hover {
+    .agent-drawer-action-slot .cbtn.permission:not(.pending):hover {
       border-color: #1b9c61;
       background: #1b9c61;
       color: #fff;
@@ -2475,7 +2426,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      padding: 12px 0;
+      padding: 16px 0;
       border-bottom: 1px solid #f0f2f4;
     }
 
@@ -2487,7 +2438,7 @@
       display: grid;
       grid-template-columns: minmax(0, 1fr) 108px 50px 34px;
       align-items: center;
-      gap: 10px;
+      gap: 14px;
     }
 
     .chat-side-log__main::after {
@@ -2505,31 +2456,6 @@
       color: #157a4d;
       text-decoration: underline;
       text-underline-offset: 2px;
-    }
-
-    .chat-side-log__meta {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 6px;
-      padding-right: 102px;
-      min-width: 0;
-    }
-
-    .chat-side-log__tag {
-      min-width: 0;
-      max-width: 50%;
-      display: inline-flex;
-      align-items: center;
-      overflow: hidden;
-      height: 22px;
-      padding: 0 8px;
-      border: 1px solid #e8ebee;
-      border-radius: 999px;
-      background: #f8fafb;
-      color: #7b828a;
-      font-size: 11.5px;
-      white-space: nowrap;
-      text-overflow: ellipsis;
     }
 
     .chat-side-log__name {
@@ -2606,10 +2532,6 @@
     .automation-record-drawer .chat-side-log__main {
       grid-template-columns: minmax(0, 1fr) 88px 48px 34px;
       gap: 8px;
-    }
-
-    .automation-record-drawer .chat-side-log__meta {
-      padding-right: 86px;
     }
 
     .chat {
@@ -3257,6 +3179,7 @@
     }
 
     #automationTaskSummary,
+    #automationExecutionDetail,
     #scheduleTaskList,
     #scheduleTaskAnchor {
       scroll-margin-top: 128px;
@@ -3264,6 +3187,842 @@
 
     .automation-task-section {
       margin: 20px 0 22px;
+    }
+
+    .automation-detail-section {
+      margin: 20px 0 22px;
+    }
+
+    .automation-breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 18px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #e8ebee;
+      color: #8a9199;
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .automation-breadcrumb button {
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #4f565d;
+      cursor: pointer;
+      font: inherit;
+    }
+
+    .automation-breadcrumb button:hover {
+      color: #1b9c61;
+    }
+
+    .automation-breadcrumb-current {
+      color: #1a1d1f;
+      font-weight: 700;
+    }
+
+    .automation-detail-panel {
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .automation-overview-card {
+      margin: 0 0 18px;
+      padding: 14px 16px;
+      border: 1px solid #eef1f3;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .automation-overview-title {
+      margin: 0 0 12px;
+      color: #1a1d1f;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .automation-overview-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .automation-overview-stat {
+      min-width: 0;
+      display: inline-flex;
+      align-items: baseline;
+      justify-content: flex-start;
+      gap: 6px;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+    }
+
+    .automation-overview-stat span {
+      color: #7b828a;
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .automation-overview-stat strong {
+      color: #1a1d1f;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .automation-detail-heading {
+      margin: 0 0 8px;
+    }
+
+    .automation-detail-title {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 9px;
+      min-width: 0;
+    }
+
+    .automation-detail-title strong,
+    .automation-detail-browser {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .automation-detail-title strong {
+      flex: 0 1 auto;
+      color: #8a9199;
+      font-size: 13px;
+      font-weight: 600;
+      line-height: 1.4;
+      letter-spacing: 0;
+    }
+
+    .automation-detail-info {
+      position: relative;
+      width: 14px;
+      height: 14px;
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #c8ced4;
+      border-radius: 999px;
+      color: #8a9199;
+      cursor: help;
+      font-size: 9px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .automation-detail-info:hover,
+    .automation-detail-info:focus-visible {
+      border-color: #9aa2aa;
+      color: #4f565d;
+    }
+
+    .automation-detail-info::before {
+      content: "";
+      position: absolute;
+      left: calc(100% + 5px);
+      top: 50%;
+      z-index: 21;
+      width: 10px;
+      height: 10px;
+      background: rgba(26, 29, 31, .96);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-50%) rotate(45deg);
+      transition: opacity .12s ease;
+    }
+
+    .automation-detail-info__tooltip {
+      position: absolute;
+      left: calc(100% + 10px);
+      top: 50%;
+      z-index: 20;
+      width: 360px;
+      max-width: min(360px, calc(100vw - 96px));
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: rgba(26, 29, 31, .96);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.55;
+      white-space: pre-line;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(4px, -50%);
+      transition: opacity .12s ease, transform .12s ease;
+      box-shadow: 0 10px 24px rgba(20,30,40,.18);
+    }
+
+    .automation-detail-info:hover::before,
+    .automation-detail-info:focus-visible::before,
+    .automation-detail-info:hover .automation-detail-info__tooltip,
+    .automation-detail-info:focus-visible .automation-detail-info__tooltip {
+      opacity: 1;
+      transform: translate(0, -50%);
+    }
+
+    .automation-detail-info:hover::before,
+    .automation-detail-info:focus-visible::before {
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .automation-detail-browser {
+      flex: 0 1 auto;
+      padding: 2px 8px;
+      border: 1px solid transparent;
+      border-radius: 999px;
+      background: #e9faf1;
+      color: #168655;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .automation-attachment-card {
+      position: relative;
+      margin: 0 0 18px;
+      padding: 18px 16px;
+      border: 0;
+      border-radius: 12px;
+      background: #fafbfc;
+      cursor: pointer;
+      transition: border-color .13s ease, background-color .13s ease;
+    }
+
+    .automation-attachment-card::before {
+      content: "";
+      position: absolute;
+      inset: -1px;
+      border: 1px dashed #d5dde5;
+      border-radius: 13px;
+      pointer-events: none;
+      transition: border-color .13s ease;
+    }
+
+    .automation-attachment-card:hover {
+      background: #f7fbf9;
+    }
+
+    .automation-attachment-card:hover::before {
+      border-color: #cfeede;
+    }
+
+    .automation-detail-panel > .chat-side-form {
+      overflow: visible;
+      padding: 0;
+    }
+
+    .automation-attachment-card__body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      margin-top: 0;
+    }
+
+    .automation-uploaded-list {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .automation-uploaded-file {
+      min-height: 34px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 7px 10px;
+      border: 1px solid #e8ebee;
+      border-radius: 9px;
+      background: #fff;
+      color: #4f565d;
+      font-size: 12.5px;
+      font-weight: 500;
+    }
+
+    .automation-uploaded-file::before {
+      content: "ZIP";
+      flex: 0 0 auto;
+      padding: 2px 5px;
+      border-radius: 5px;
+      background: #eef5ff;
+      color: #2f75d6;
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    .automation-uploaded-file span {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .automation-attachment-status {
+      position: relative;
+      width: min(280px, 100%);
+      min-height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .automation-attachment-spec {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      color: #1a1d1f;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      line-height: 1.45;
+      text-align: center;
+      white-space: pre-wrap;
+    }
+
+    .automation-attachment-card.is-extracting .automation-attachment-spec {
+      visibility: hidden;
+    }
+
+    .automation-attachment-action {
+      min-height: 32px;
+      flex: 0 0 auto;
+      margin-top: 0;
+      min-width: 112px;
+      padding: 0 20px;
+      border: 1px solid var(--color-primary);
+      border-radius: 8px;
+      background: var(--color-primary);
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 700;
+      transition: border-color .13s ease, background-color .13s ease, color .13s ease;
+    }
+
+    .automation-attachment-action::before {
+      content: "+";
+      margin-right: 6px;
+      font-size: 14px;
+      line-height: 1;
+      vertical-align: -1px;
+    }
+
+    .automation-attachment-action:hover {
+      border-color: #1b9c61;
+      background: #1b9c61;
+      color: #fff;
+    }
+
+    .automation-attachment-card.is-extracting {
+      cursor: wait;
+    }
+
+    .automation-attachment-card.is-extracting .automation-attachment-action {
+      opacity: .72;
+      cursor: wait;
+    }
+
+    .automation-extract-progress {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .automation-extract-progress[hidden] {
+      display: none;
+    }
+
+    .automation-extract-progress__track {
+      height: 6px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #e8edf1;
+    }
+
+    .automation-extract-progress__bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--color-primary);
+      transition: width .18s ease;
+    }
+
+    .automation-extract-progress__text {
+      color: #6b7178;
+      font-size: 12px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .automation-upload-history {
+      margin-top: 18px;
+    }
+
+    .automation-upload-tabs {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      margin: 0 0 12px;
+      border-bottom: 1px solid #eef1f3;
+    }
+
+    .automation-upload-tab {
+      position: relative;
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: #8a9199;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    .automation-upload-tab::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -1px;
+      width: 22px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--color-primary);
+      opacity: 0;
+      transform: translateX(-50%);
+      transition: opacity .12s ease;
+    }
+
+    .automation-upload-tab.active {
+      color: #1a1d1f;
+    }
+
+    .automation-upload-tab.active::after {
+      opacity: 1;
+    }
+
+    .automation-upload-tab-count {
+      color: inherit;
+      font: inherit;
+    }
+
+    .automation-upload-table-card {
+      overflow-x: auto;
+      border: 1px solid #eef1f3;
+      border-radius: 12px;
+      background: #fff;
+    }
+
+    .automation-upload-table {
+      min-width: 920px;
+    }
+
+    .automation-upload-row {
+      display: grid;
+      grid-template-columns: 1.35fr 1.1fr 1.1fr .72fr 1.25fr .82fr;
+      align-items: center;
+      gap: 12px;
+      min-height: 50px;
+      padding: 11px 14px;
+      border-bottom: 1px solid #eef1f3;
+      color: #4f565d;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+
+    .automation-upload-row:last-child {
+      border-bottom: 0;
+    }
+
+    .automation-upload-head {
+      min-height: 40px;
+      background: #fafbfc;
+      color: #8a9199;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .automation-upload-head-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .automation-upload-head-info {
+      position: relative;
+      width: 13px;
+      height: 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #c8ced4;
+      border-radius: 999px;
+      color: #8a9199;
+      cursor: help;
+      font-size: 8px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 1;
+    }
+
+    .automation-upload-head-info::before {
+      content: "";
+      position: absolute;
+      left: calc(100% + 5px);
+      top: 50%;
+      z-index: 21;
+      width: 8px;
+      height: 8px;
+      background: rgba(26, 29, 31, .96);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-50%) rotate(45deg);
+      transition: opacity .12s ease;
+    }
+
+    .automation-upload-head-info::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      left: calc(100% + 9px);
+      top: 50%;
+      z-index: 20;
+      width: 210px;
+      padding: 8px 10px;
+      border-radius: 9px;
+      background: rgba(26, 29, 31, .96);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.55;
+      white-space: pre-line;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate(4px, -50%);
+      transition: opacity .12s ease, transform .12s ease;
+      box-shadow: 0 10px 24px rgba(20,30,40,.18);
+    }
+
+    .automation-upload-head-info:hover,
+    .automation-upload-head-info:focus-visible {
+      border-color: #9aa2aa;
+      color: #4f565d;
+    }
+
+    .automation-upload-head-info:hover::before,
+    .automation-upload-head-info:hover::after,
+    .automation-upload-head-info:focus-visible::before,
+    .automation-upload-head-info:focus-visible::after {
+      opacity: 1;
+      transform: translate(0, -50%);
+    }
+
+    .automation-upload-head-info:hover::before,
+    .automation-upload-head-info:focus-visible::before {
+      transform: translateY(-50%) rotate(45deg);
+    }
+
+    .automation-upload-head-info::before,
+    .automation-upload-head-info::after {
+      display: none;
+    }
+
+    .automation-floating-tooltip {
+      position: fixed;
+      z-index: 1000;
+      max-width: min(260px, calc(100vw - 24px));
+      padding: 8px 10px;
+      border-radius: 9px;
+      background: rgba(26, 29, 31, .96);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 1.55;
+      white-space: pre-line;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: opacity .12s ease, transform .12s ease;
+      box-shadow: 0 10px 24px rgba(20,30,40,.18);
+    }
+
+    .automation-floating-tooltip.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .automation-upload-video {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      overflow: hidden;
+      color: #1a1d1f;
+      font-weight: 600;
+    }
+
+    .automation-upload-thumb {
+      position: relative;
+      width: 28px;
+      aspect-ratio: 9 / 16;
+      flex: 0 0 28px;
+      overflow: hidden;
+      border-radius: 6px;
+      background: linear-gradient(135deg, #dcecff 0%, #e9faf1 55%, #f4f6f8 100%);
+      box-shadow: inset 0 0 0 1px rgba(90, 104, 118, .12);
+    }
+
+    .automation-upload-thumb::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      border-top: 5px solid transparent;
+      border-bottom: 5px solid transparent;
+      border-left: 8px solid rgba(26, 29, 31, .48);
+      transform: translate(-36%, -50%);
+    }
+
+    .automation-upload-thumb.alt {
+      background: linear-gradient(135deg, #ffe7df 0%, #fff5e6 52%, #edf3ff 100%);
+    }
+
+    .automation-upload-thumb.cool {
+      background: linear-gradient(135deg, #e8e6ff 0%, #ecf9ff 50%, #effaf2 100%);
+    }
+
+    .automation-upload-name {
+      min-width: 0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .automation-upload-data {
+      display: inline-flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      width: max-content;
+      max-width: 100%;
+      min-height: 26px;
+      padding: 0 8px;
+      border-radius: 7px;
+      color: #6b7178;
+      cursor: pointer;
+      transition: background-color .13s ease, color .13s ease;
+    }
+
+    .automation-upload-data::after {
+      content: ">";
+      color: #a7adb3;
+      font-size: 10px;
+      line-height: 1;
+      transition: color .13s ease, transform .13s ease;
+    }
+
+    .automation-upload-data:hover,
+    .automation-upload-data:focus-visible {
+      background: #e9faf1;
+      color: #168655;
+      outline: none;
+    }
+
+    .automation-upload-data:hover::after,
+    .automation-upload-data:focus-visible::after {
+      color: #168655;
+      transform: translateX(1px);
+    }
+
+    .automation-upload-data.is-disabled {
+      cursor: default;
+    }
+
+    .automation-upload-data.is-disabled::after {
+      display: none;
+    }
+
+    .automation-upload-data.is-disabled:hover,
+    .automation-upload-data.is-disabled:focus-visible {
+      background: transparent;
+      color: #6b7178;
+    }
+
+    .automation-upload-data.is-disabled:hover .automation-upload-metric,
+    .automation-upload-data.is-disabled:focus-visible .automation-upload-metric,
+    .automation-upload-data.is-disabled:hover .automation-upload-metric svg,
+    .automation-upload-data.is-disabled:focus-visible .automation-upload-metric svg {
+      color: #6b7178;
+    }
+
+    .automation-upload-metric {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 0;
+      padding: 0;
+      border-radius: 0;
+      color: #6b7178;
+      cursor: inherit;
+      white-space: nowrap;
+      transition: color .13s ease;
+    }
+
+    .automation-upload-metric svg {
+      width: 13px;
+      height: 13px;
+      flex: 0 0 13px;
+      color: #8a9199;
+      stroke-width: 1.8;
+    }
+
+    .automation-upload-data:hover .automation-upload-metric,
+    .automation-upload-data:focus-visible .automation-upload-metric,
+    .automation-upload-data:hover .automation-upload-metric svg,
+    .automation-upload-data:focus-visible .automation-upload-metric svg {
+      color: #168655;
+    }
+
+    .automation-upload-status,
+    .automation-upload-risk {
+      width: max-content;
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      background: #e9faf1;
+      color: #168655;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .automation-upload-status.failed,
+    .automation-upload-risk.abnormal {
+      background: #fff0ed;
+      color: #e14b4b;
+    }
+
+    .automation-upload-status.pending {
+      background: #eef5ff;
+      color: #2f75d6;
+    }
+
+    .automation-pending-table {
+      min-width: 640px;
+    }
+
+    .automation-pending-row {
+      grid-template-columns: minmax(260px, 1fr) minmax(360px, auto);
+    }
+
+    .automation-pending-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 14px;
+    }
+
+    .automation-pending-action {
+      position: relative;
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border: 1px solid #dfe4e8;
+      border-radius: 7px;
+      background: #fff;
+      color: #4f565d;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: border-color .13s ease, background-color .13s ease, color .13s ease;
+    }
+
+    .automation-pending-divider {
+      width: 1px;
+      height: 14px;
+      background: #dfe4e8;
+    }
+
+    .automation-pending-action:hover {
+      border-color: #b8e7cd;
+      background: #f1fbf6;
+      color: #168655;
+    }
+
+    .automation-pending-action.primary {
+      border-color: #a9e2c4;
+      color: #168655;
+    }
+
+    .automation-pending-action.danger:hover {
+      border-color: #ffd3cc;
+      background: #fff5f2;
+      color: #e14b4b;
+    }
+
+    .automation-pending-schedule {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding-left: 2px;
+    }
+
+    .automation-pending-input {
+      height: 28px;
+      min-width: 126px;
+      border: 1px solid #dfe4e8;
+      border-radius: 7px;
+      background: #fff;
+      color: #1a1d1f;
+      font-size: 12px;
+      padding: 0 8px;
+      outline: none;
+    }
+
+    .automation-pending-input[type="time"] {
+      min-width: 92px;
+    }
+
+    .automation-pending-input:focus {
+      border-color: #a9e2c4;
+      box-shadow: 0 0 0 3px rgba(34, 181, 115, .1);
     }
 
     .automation-type-stack {
@@ -5125,6 +5884,14 @@
       display: none;
     }
 
+    .task-reservation-panel {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid #eef1f3;
+      border-radius: 10px;
+      background: #fafbfc;
+    }
+
     .task-cycle-label {
       display: block;
       margin-bottom: 8px;
@@ -5859,63 +6626,48 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                   <div class="chat-side-log">
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 11:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 10:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 09:00</span><span class="chat-side-log__status fail">失败</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 08:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 23:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 22:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 21:00</span><span class="chat-side-log__status fail">失败</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 20:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 19:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 18:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 17:00</span><span class="chat-side-log__status fail">失败</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 16:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 15:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 14:00</span><span class="chat-side-log__status">成功</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                     <div class="chat-side-log__row">
                       <div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 13:00</span><span class="chat-side-log__status fail">失败</span></div>
-                      <div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div>
                     </div>
                   </div>
                 </div>
@@ -5961,7 +6713,6 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                     <div class="task-upload">
                       <span class="task-upload-icon" aria-hidden="true"></span>
                       <span class="task-upload-text" id="taskDetailFileName">tiktok-materials.zip</span>
-                      <button class="task-upload-remove" type="button" id="taskDetailFileRemoveBtn" title="删除附件" aria-label="删除附件"></button>
                       <span class="task-upload-hint">支持上传 .zip 压缩包，包含视频与配置素材</span>
                       <input class="task-file" id="taskDetailMaterial" type="file" accept=".zip,application/zip">
                     </div>
@@ -6147,11 +6898,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                   <div class="chat-side-form__row chat-side-form__row--wide">
                     <div class="chat-side-log-title">执行日志<span class="chat-side-log-count" id="taskDetailLogCount">共运行5次</span></div>
                     <div class="chat-side-log" id="taskDetailLog">
-                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 11:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 10:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 09:00</span><span class="chat-side-log__status fail">失败</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 08:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 23:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
+                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 11:00</span><span class="chat-side-log__status">成功</span></div></div>
+                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 10:00</span><span class="chat-side-log__status">成功</span></div></div>
+                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 09:00</span><span class="chat-side-log__status fail">失败</span></div></div>
+                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 08:00</span><span class="chat-side-log__status">成功</span></div></div>
+                      <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 23:00</span><span class="chat-side-log__status">成功</span></div></div>
                     </div>
                   </div>
                 </section>
@@ -6185,8 +6936,8 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                       <div>任务状态</div>
                       <div>操作</div>
                     </div>
-                    <div class="automation-form-row" data-automation-row data-task-name="每日tiktok上传1" data-task-browser="k1dl8vxd (th) · allson_007, allson_008">
-                      <div><div class="automation-task-title">每日tiktok上传1</div><div class="automation-task-sub" title="k1dl8vxd (th) · allson_007, allson_008">k1dl8vxd (th) · allson_007, allson_008</div></div>
+                    <div class="automation-form-row" data-automation-row data-task-name="每日tiktok上传1" data-task-flow="Tiktok上传" data-next-run="今天 14:00" data-task-browser="k1dl8vxd (th) · allson_007" data-task-file="tiktok-caption-pack.zip">
+                      <div><div class="automation-task-title">每日tiktok上传1</div><div class="automation-task-sub" title="k1dl8vxd (th) · allson_007">k1dl8vxd (th) · allson_007</div></div>
                       <div>每 2 小时执行一次</div>
                       <div>今天 14:00</div>
                       <div><span class="automation-result">成功</span></div>
@@ -6194,7 +6945,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                       <div class="automation-status-cell"><span class="automation-status">运行中</span><button class="automation-form-action toggle-pause" type="button" data-auto-action="toggle">运行中</button></div>
                       <div class="automation-form-actions">
                         <button class="automation-form-action" type="button" data-auto-action="edit">编辑</button>
-                        <button class="automation-form-action" type="button" data-auto-action="record">执行记录</button>
+                        <button class="automation-form-action" type="button" data-auto-action="detail">执行详情</button>
                       </div>
                     </div>
                       </div>
@@ -6301,6 +7052,117 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                         <button class="automation-form-action" type="button" data-auto-action="record">执行记录</button>
                       </div>
                     </div>
+                      </div>
+                    </div>
+                  </section>
+                </div>
+              </section>
+              <section class="automation-detail-section" id="automationExecutionDetail" aria-label="执行详情" hidden>
+                <nav class="automation-breadcrumb" aria-label="面包屑导航">
+                  <button type="button" id="automationDetailBackBtn">每日tiktok上传1</button>
+                  <span aria-hidden="true">&gt;</span>
+                  <span class="automation-breadcrumb-current">执行详情</span>
+                </nav>
+                <section class="automation-overview-card" aria-label="执行总览">
+                  <h3 class="automation-overview-title" id="automationOverviewBrowserTitle">k1dl8vxd (th) · allson_007</h3>
+                  <div class="automation-overview-stats">
+                    <div class="automation-overview-stat success"><strong id="automationOverviewSuccessCount">4</strong><span>成功</span></div>
+                    <div class="automation-overview-stat failed"><strong id="automationOverviewFailCount">1</strong><span>失败</span></div>
+                    <div class="automation-overview-stat pending"><strong id="automationOverviewPendingCount">1</strong><span>待上传</span></div>
+                  </div>
+                </section>
+                <div class="automation-detail-panel">
+                  <header class="automation-detail-heading">
+                    <div class="automation-detail-title">
+                      <strong id="automationDetailTaskName">添加视频</strong>
+                      <i class="automation-detail-info" tabindex="0" aria-label="添加视频说明">i<span class="automation-detail-info__tooltip" role="tooltip">ZIP 内任意位置包含 tag.txt 即可；服务会找到 tag.txt 所在目录，将该目录下的文件解压到目标账号的 videos/。
+
+任意目录/
+├─ tag.txt
+└─ video_001.mp4
+tag.txt 为标签；同级视频文件会进入 videos/。</span></i>
+                    </div>
+                  </header>
+                  <section class="automation-attachment-card" id="automationDetailUploadCard" role="button" tabindex="0" aria-label="添加并解压">
+                    <div class="automation-attachment-card__body">
+                      <div class="automation-attachment-status">
+                        <pre class="automation-attachment-spec" id="automationAttachmentSpec">选择要解压的视频.zip文件</pre>
+                        <div class="automation-extract-progress" id="automationExtractProgress" hidden>
+                          <div class="automation-extract-progress__track" aria-hidden="true"><div class="automation-extract-progress__bar" id="automationExtractProgressBar"></div></div>
+                          <div class="automation-extract-progress__text" id="automationExtractProgressText">准备解压...</div>
+                        </div>
+                      </div>
+                      <button class="automation-attachment-action" type="button" id="automationDetailUploadBtn">添加并解压</button>
+                      <input id="automationDetailUploadInput" type="file" accept=".zip,application/zip" hidden>
+                    </div>
+                  </section>
+                  <section class="automation-upload-history" aria-label="上传视频记录">
+                    <div class="automation-upload-tabs" role="tablist" aria-label="上传记录视图">
+                      <button class="automation-upload-tab active" type="button" role="tab" aria-selected="true" data-upload-view="history">上传历史<span class="automation-upload-tab-count" id="automationUploadHistoryCount">(0)</span></button>
+                      <button class="automation-upload-tab" type="button" role="tab" aria-selected="false" data-upload-view="pending">待上传<span class="automation-upload-tab-count" id="automationPendingUploadCount">(0)</span></button>
+                    </div>
+                    <div class="automation-upload-panel" data-upload-panel="history">
+                      <div class="automation-upload-table-card">
+                        <div class="automation-upload-table" id="automationUploadHistoryTable">
+                          <div class="automation-upload-row automation-upload-head">
+                            <div>视频</div>
+                            <div>预约时间</div>
+                            <div>记录时间</div>
+                            <div>状态</div>
+                            <div><span class="automation-upload-head-label">数据<i class="automation-upload-head-info" tabindex="0" aria-label="数据更新时间说明" data-tooltip="更新时间：2026-07-17 8:00
+每天8:00/18:00自动更新前30条视频数据">i</i></span></div>
+                            <div><span class="automation-upload-head-label">风控检测<i class="automation-upload-head-info" tabindex="0" aria-label="风控检测时间说明" data-tooltip="检测时间：2026-07-17 8:00
+每天8:00自动检测">i</i></span></div>
+                          </div>
+                          <div class="automation-upload-row">
+                            <div class="automation-upload-video"><span class="automation-upload-thumb" aria-hidden="true"></span><span class="automation-upload-name">video_001.mp4</span></div>
+                            <div>2026-07-18 18:00</div>
+                            <div>2026-07-16 15:39</div>
+                            <div><span class="automation-upload-status pending">等待发布</span></div>
+                            <div class="automation-upload-data is-disabled">
+                              <span class="automation-upload-metric" aria-label="播放数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>-</span>
+                              <span class="automation-upload-metric" aria-label="点赞数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3z"/><path d="M7 10l4-7a2 2 0 0 1 3.7 1.3L14 9h5.4a2 2 0 0 1 2 2.3l-1.2 8A2 2 0 0 1 18.2 21H7"/></svg>-</span>
+                              <span class="automation-upload-metric" aria-label="评论数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6.1A8 8 0 1 1 21 12z"/></svg>-</span>
+                            </div>
+                            <div><span class="automation-upload-risk">已通过</span></div>
+                          </div>
+                          <div class="automation-upload-row">
+                            <div class="automation-upload-video"><span class="automation-upload-thumb alt" aria-hidden="true"></span><span class="automation-upload-name">video_002.mp4</span></div>
+                            <div>2026-07-18 18:00</div>
+                            <div>2026-07-16 15:39</div>
+                            <div><span class="automation-upload-status pending">等待发布</span></div>
+                            <div class="automation-upload-data is-disabled">
+                              <span class="automation-upload-metric" aria-label="播放数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>-</span>
+                              <span class="automation-upload-metric" aria-label="点赞数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3z"/><path d="M7 10l4-7a2 2 0 0 1 3.7 1.3L14 9h5.4a2 2 0 0 1 2 2.3l-1.2 8A2 2 0 0 1 18.2 21H7"/></svg>-</span>
+                              <span class="automation-upload-metric" aria-label="评论数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6.1A8 8 0 1 1 21 12z"/></svg>-</span>
+                            </div>
+                            <div><span class="automation-upload-risk abnormal">未通过</span></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="automation-upload-panel" data-upload-panel="pending" hidden>
+                      <div class="automation-upload-table-card">
+                        <div class="automation-upload-table automation-pending-table" id="automationPendingUploadTable">
+                          <div class="automation-upload-row automation-upload-head automation-pending-row">
+                            <div>视频</div>
+                            <div>操作</div>
+                          </div>
+                          <div class="automation-upload-row automation-pending-row">
+                            <div class="automation-upload-video"><span class="automation-upload-thumb cool" aria-hidden="true"></span><span class="automation-upload-name">video_003.mp4</span></div>
+                            <div class="automation-pending-actions">
+                              <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即上传</button>
+                              <span class="automation-pending-divider" aria-hidden="true"></span>
+                              <span class="automation-pending-schedule" hidden>
+                                <input class="automation-pending-input" type="date" value="2026-07-18" aria-label="预约上传日期">
+                                <input class="automation-pending-input" type="time" value="18:00" aria-label="预约上传时间">
+                              </span>
+                              <button class="automation-pending-action" type="button" data-pending-action="schedule">预约上传</button>
+                              <span class="automation-pending-divider" aria-hidden="true"></span>
+                              <button class="automation-pending-action danger" type="button" data-pending-action="delete">删除</button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </section>
@@ -6841,16 +7703,16 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         <div class="chat-side-form__row chat-side-form__row--wide">
           <div class="chat-side-log-title">执行日志<span class="chat-side-log-count">共运行15次</span></div>
           <div class="chat-side-log" id="automationRecordLog">
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 11:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 10:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 09:00</span><span class="chat-side-log__status fail">失败</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 08:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 23:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 22:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 21:00</span><span class="chat-side-log__status fail">失败</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 20:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1dl8vxd (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 19:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1df4k9n (th)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
-            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 18:00</span><span class="chat-side-log__status">成功</span></div><div class="chat-side-log__meta"><span class="chat-side-log__tag">浏览器 k1e3yqvi (zh)</span><span class="chat-side-log__tag">参数 tiktok-materials.zip</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 11:00</span><span class="chat-side-log__status">成功</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 10:00</span><span class="chat-side-log__status">成功</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 09:00</span><span class="chat-side-log__status fail">失败</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">今天 08:00</span><span class="chat-side-log__status">成功</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 23:00</span><span class="chat-side-log__status">成功</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 22:00</span><span class="chat-side-log__status">成功</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 21:00</span><span class="chat-side-log__status fail">失败</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 20:00</span><span class="chat-side-log__status">成功</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 19:00</span><span class="chat-side-log__status">成功</span></div></div>
+            <div class="chat-side-log__row"><div class="chat-side-log__main"><span class="chat-side-log__name">每日TikTok上传</span><span class="chat-side-log__time">昨天 18:00</span><span class="chat-side-log__status">成功</span></div></div>
           </div>
         </div>
       </section>
@@ -6887,12 +7749,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
             </select>
           </div>
         </div>
-        <div class="task-field">
+        <div class="task-field" id="copyrightTaskMaterialField">
           <label class="task-label" for="copyrightTaskMaterial">任务参数</label>
           <div class="task-upload">
             <span class="task-upload-icon" aria-hidden="true"></span>
             <span class="task-upload-text" id="copyrightTaskFileName">选择文件</span>
-            <button class="task-upload-remove" type="button" id="copyrightTaskFileRemoveBtn" title="删除附件" aria-label="删除附件" hidden></button>
             <span class="task-upload-hint">支持上传 .zip 压缩包，包含视频与配置素材</span>
             <input class="task-file" id="copyrightTaskMaterial" type="file" accept=".zip,application/zip">
           </div>
@@ -6902,7 +7763,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 └─ video_001.mp4
 tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         </div>
-        <div class="task-field">
+        <div class="task-field" id="copyrightTaskStartTimeField">
           <label class="task-label" for="taskStartTime">开始时间</label>
           <input class="task-text task-control-lg" id="taskStartTime" type="datetime-local">
         </div>
@@ -6993,6 +7854,24 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
               <div>
                 <label class="task-mini-label" for="taskSingleAt">执行时间</label>
                 <input class="task-text task-control-lg" id="taskSingleAt" type="datetime-local">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="task-field" id="copyrightTaskReservationField" hidden>
+          <span class="task-label task-label-with-info">预约配置<i class="task-info" tabindex="0" aria-label="预约配置说明" data-tooltip="执行参数配置，配置后自动预约tt后台发布时间">i</i></span>
+          <div class="task-reservation-panel">
+            <div class="task-inline-fields">
+              <div>
+                <label class="task-mini-label" for="copyrightTaskAdvanceDays">提前天数</label>
+                <div class="task-input-unit">
+                  <input class="task-text task-control-sm" id="copyrightTaskAdvanceDays" type="number" min="0" value="2">
+                  <span class="task-unit">天</span>
+                </div>
+              </div>
+              <div>
+                <label class="task-mini-label" for="copyrightTaskPublishTimes">预约上传时间（逗号分隔）</label>
+                <input class="task-text task-control-lg" id="copyrightTaskPublishTimes" type="text" value="09:00, 17:00">
               </div>
             </div>
           </div>
@@ -7170,7 +8049,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 
     const conversationHiddenAgentNames = new Set(["点墨设计", "剧查查", "Google Trends"]);
     const permissionRequestAgentNames = new Set();
-    const state = { page: "agents", scope: "all", category: "all", query: "", selected: "大盘数据分析助手", activeSessionId: "", drawerAgent: "", drawerRequiresPermission: false, automationView: "automation" };
+    const state = { page: "agents", scope: "all", category: "all", query: "", selected: "大盘数据分析助手", activeSessionId: "", drawerAgent: "", drawerRequiresPermission: false, automationView: "automation", automationDetailOpen: false };
     const routeScrollPositions = new Map();
     const searchInput = document.getElementById("searchInput");
     const servingGrid = document.getElementById("servingGrid");
@@ -7219,7 +8098,6 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const taskDetailFlowSelect = document.getElementById("taskDetailFlowSelect");
     const taskDetailMaterial = document.getElementById("taskDetailMaterial");
     const taskDetailFileName = document.getElementById("taskDetailFileName");
-    const taskDetailFileRemoveBtn = document.getElementById("taskDetailFileRemoveBtn");
     const taskDetailContinueUploadBtn = document.getElementById("taskDetailContinueUploadBtn");
     const taskDetailPrimaryBtn = document.getElementById("taskDetailPrimaryBtn");
     const taskDetailExpandBtn = document.getElementById("taskDetailExpandBtn");
@@ -7254,6 +8132,26 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const automationRecordNextRunItem = document.getElementById("automationRecordNextRunItem");
     const automationRecordNextRunText = document.getElementById("automationRecordNextRunText");
     const automationRecordLog = document.getElementById("automationRecordLog");
+    const automationExecutionDetail = document.getElementById("automationExecutionDetail");
+    const automationDetailBackBtn = document.getElementById("automationDetailBackBtn");
+    const automationDetailTaskName = document.getElementById("automationDetailTaskName");
+    const automationDetailBrowserName = document.getElementById("automationDetailBrowserName");
+    const automationOverviewBrowserTitle = document.getElementById("automationOverviewBrowserTitle");
+    const automationOverviewSuccessCount = document.getElementById("automationOverviewSuccessCount");
+    const automationOverviewFailCount = document.getElementById("automationOverviewFailCount");
+    const automationOverviewPendingCount = document.getElementById("automationOverviewPendingCount");
+    const automationDetailLog = document.getElementById("automationDetailLog");
+    const automationDetailUploadedList = document.getElementById("automationDetailUploadedList");
+    const automationDetailUploadCard = document.getElementById("automationDetailUploadCard");
+    const automationDetailUploadBtn = document.getElementById("automationDetailUploadBtn");
+    const automationDetailUploadInput = document.getElementById("automationDetailUploadInput");
+    const automationExtractProgress = document.getElementById("automationExtractProgress");
+    const automationExtractProgressBar = document.getElementById("automationExtractProgressBar");
+    const automationExtractProgressText = document.getElementById("automationExtractProgressText");
+    const automationUploadHistoryTable = document.getElementById("automationUploadHistoryTable");
+    const automationPendingUploadTable = document.getElementById("automationPendingUploadTable");
+    const automationUploadHistoryCount = document.getElementById("automationUploadHistoryCount");
+    const automationPendingUploadCount = document.getElementById("automationPendingUploadCount");
     const copyrightTaskDialog = document.getElementById("copyrightTaskDialog");
     const copyrightTaskTitle = document.getElementById("copyrightTaskTitle");
     const copyrightTaskDesc = document.querySelector("#copyrightTaskDialog .task-modal-head p");
@@ -7264,10 +8162,14 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const copyrightTaskCancelBtn = document.getElementById("copyrightTaskCancelBtn");
     const copyrightTaskCreateBtn = document.getElementById("copyrightTaskCreateBtn");
     const copyrightTaskDeleteBtn = document.getElementById("copyrightTaskDeleteBtn");
+    const copyrightTaskMaterialField = document.getElementById("copyrightTaskMaterialField");
+    const copyrightTaskStartTimeField = document.getElementById("copyrightTaskStartTimeField");
+    const copyrightTaskReservationField = document.getElementById("copyrightTaskReservationField");
     const copyrightTaskMaterial = document.getElementById("copyrightTaskMaterial");
     const copyrightTaskFileName = document.getElementById("copyrightTaskFileName");
-    const copyrightTaskFileRemoveBtn = document.getElementById("copyrightTaskFileRemoveBtn");
     const copyrightTaskContinueUploadBtn = document.getElementById("copyrightTaskContinueUploadBtn");
+    const copyrightTaskAdvanceDays = document.getElementById("copyrightTaskAdvanceDays");
+    const copyrightTaskPublishTimes = document.getElementById("copyrightTaskPublishTimes");
     const scheduleTaskDialog = document.getElementById("scheduleTaskDialog");
     const scheduleTaskCloseBtn = document.getElementById("scheduleTaskCloseBtn");
     const scheduleTaskCancelBtn = document.getElementById("scheduleTaskCancelBtn");
@@ -7342,6 +8244,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     };
     const thinkingSessionTimers = new Map();
     let pendingDeleteSession = null;
+    let pendingDeleteUploadRow = null;
     const scrollingTimers = new WeakMap();
     const globalScrollThumb = document.createElement("div");
     globalScrollThumb.className = "global-scroll-thumb";
@@ -7908,7 +8811,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       if (taskDetailFileName && document.activeElement !== taskDetailMaterial) {
         taskDetailFileName.textContent = history?.isNewTask ? "选择文件" : history?.taskFile || "tiktok-materials.zip";
         if (taskDetailMaterial) taskDetailMaterial.value = "";
-        syncTaskUploadActions(taskDetailFileName, taskDetailFileRemoveBtn, taskDetailContinueUploadBtn);
+        syncTaskUploadActions(taskDetailFileName, null, taskDetailContinueUploadBtn);
       }
       if (taskDetailWorkspace) taskDetailWorkspace.setAttribute("aria-label", `${flowName}任务详情`);
       if (taskDetailRecordTitle) taskDetailRecordTitle.textContent = history?.isNewTask ? "Tiktok上传任务" : title;
@@ -7963,6 +8866,212 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       return { rule: "每小时执行一次", nextRun: "下一个整点" };
     }
 
+    function isTiktokAutomationRow(row) {
+      if (!row) return false;
+      const groupLabel = row.closest(".automation-type-group")?.getAttribute("aria-label") || "";
+      return groupLabel.includes("Tiktok上传助手") || row.dataset.taskFlow === "Tiktok上传";
+    }
+
+    function automationRowNextRun(row) {
+      if (!row) return "今天 12:00";
+      return row.dataset.nextRun || row.children[2]?.textContent?.trim() || "今天 12:00";
+    }
+
+    function attachmentNamesFromValue(fileNames) {
+      if (Array.isArray(fileNames)) return fileNames.map(name => String(name).trim()).filter(Boolean);
+      return String(fileNames || "")
+        .split(",")
+        .map(name => name.trim())
+        .filter(name => name && name !== "选择文件");
+    }
+
+    function syncAutomationDetailAttachment(fileNames) {
+      const names = attachmentNamesFromValue(fileNames);
+      if (automationDetailUploadedList) {
+        automationDetailUploadedList.innerHTML = names.map(name => `<div class="automation-uploaded-file"><span>${escapeHtml(name)}</span></div>`).join("");
+        automationDetailUploadedList.hidden = !names.length;
+      }
+      if (automationDetailUploadBtn) automationDetailUploadBtn.textContent = "添加并解压";
+    }
+
+    function syncAutomationDetailOverview(browserName, fileNames) {
+      const statuses = Array.from(automationDetailLog?.querySelectorAll(".chat-side-log__status") || []);
+      const successCount = statuses.length
+        ? statuses.filter(node => !node.classList.contains("fail") && node.textContent.trim() === "成功").length
+        : Number(automationOverviewSuccessCount?.textContent || 4);
+      const failCount = statuses.length
+        ? statuses.filter(node => node.classList.contains("fail") || node.textContent.trim() === "失败").length
+        : Number(automationOverviewFailCount?.textContent || 1);
+      const pendingUploadCount = Math.max(0, 2 - attachmentNamesFromValue(fileNames).length);
+      if (automationOverviewBrowserTitle) automationOverviewBrowserTitle.textContent = browserName || "未选择浏览器";
+      if (automationOverviewSuccessCount) automationOverviewSuccessCount.textContent = String(successCount);
+      if (automationOverviewFailCount) automationOverviewFailCount.textContent = String(failCount);
+      if (automationOverviewPendingCount) automationOverviewPendingCount.textContent = String(pendingUploadCount);
+    }
+
+    function automationUploadMetricMarkup(type, label, value) {
+      const icons = {
+        play: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>',
+        like: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3z"/><path d="M7 10l4-7a2 2 0 0 1 3.7 1.3L14 9h5.4a2 2 0 0 1 2 2.3l-1.2 8A2 2 0 0 1 18.2 21H7"/></svg>',
+        comment: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6.1A8 8 0 1 1 21 12z"/></svg>'
+      };
+      return `<span class="automation-upload-metric" aria-label="${escapeHtml(`${label} ${value}`)}">${icons[type]}${escapeHtml(value)}</span>`;
+    }
+
+    function automationUploadRowMarkup(index) {
+      const isFailed = index % 7 === 0;
+      const videoName = `video_${String(index).padStart(3, "0")}.mp4`;
+      const hour = String(8 + (index % 12)).padStart(2, "0");
+      const minute = index % 2 ? "00" : "30";
+      const recordMinute = String(30 + (index % 20)).padStart(2, "0");
+      const hasMetrics = index > 3;
+      const playCount = hasMetrics ? (isFailed ? "0" : (9200 + index * 417).toLocaleString("en-US")) : "-";
+      const likeCount = hasMetrics ? (isFailed ? "0" : String(420 + index * 31)) : "-";
+      const commentCount = hasMetrics ? (isFailed ? "0" : String(18 + index * 2)) : "-";
+      const isWaitingPublish = index <= 3;
+      const statusClass = isWaitingPublish ? " pending" : (isFailed ? " failed" : "");
+      const statusText = isWaitingPublish ? "等待发布" : (isFailed ? "失败" : "成功");
+      const dataClass = hasMetrics ? "automation-upload-data" : "automation-upload-data is-disabled";
+      const thumbClass = index % 3 === 1 ? "" : (index % 3 === 2 ? " alt" : " cool");
+      return `
+        <div class="automation-upload-row" data-generated-upload-row>
+          <div class="automation-upload-video"><span class="automation-upload-thumb${thumbClass}" aria-hidden="true"></span><span class="automation-upload-name">${escapeHtml(videoName)}</span></div>
+          <div>2026-07-18 ${hour}:${minute}</div>
+          <div>2026-07-16 15:${recordMinute}</div>
+          <div><span class="automation-upload-status${statusClass}">${statusText}</span></div>
+          <div class="${dataClass}">
+            ${automationUploadMetricMarkup("play", "播放数", playCount)}
+            ${automationUploadMetricMarkup("like", "点赞数", likeCount)}
+            ${automationUploadMetricMarkup("comment", "评论数", commentCount)}
+          </div>
+          <div><span class="automation-upload-risk${isFailed ? " abnormal" : ""}">${isFailed ? "未通过" : "已通过"}</span></div>
+        </div>
+      `;
+    }
+
+    function renderAutomationUploadHistoryDemoRows() {
+      if (!automationUploadHistoryTable || automationUploadHistoryTable.dataset.demoRowsReady === "true") return;
+      const existingRows = automationUploadHistoryTable.querySelectorAll(".automation-upload-row:not(.automation-upload-head)").length;
+      const nextRows = [];
+      for (let index = existingRows + 1; index <= 20; index += 1) {
+        nextRows.push(automationUploadRowMarkup(index));
+      }
+      automationUploadHistoryTable.insertAdjacentHTML("beforeend", nextRows.join(""));
+      automationUploadHistoryTable.dataset.demoRowsReady = "true";
+    }
+
+    function syncAutomationUploadTabCounts() {
+      const historyCount = automationUploadHistoryTable?.querySelectorAll(".automation-upload-row:not(.automation-upload-head)").length || 0;
+      const pendingCount = automationPendingUploadTable?.querySelectorAll(".automation-pending-row:not(.automation-upload-head)").length || 0;
+      if (automationUploadHistoryCount) automationUploadHistoryCount.textContent = `(${historyCount})`;
+      if (automationPendingUploadCount) automationPendingUploadCount.textContent = `(${pendingCount})`;
+    }
+
+    function automationPendingUploadRowMarkup(videoIndex) {
+      const videoName = `video_${String(videoIndex).padStart(3, "0")}.mp4`;
+      const thumbClass = videoIndex % 3 === 1 ? "" : (videoIndex % 3 === 2 ? " alt" : " cool");
+      const day = String(18 + ((videoIndex - 3) % 3)).padStart(2, "0");
+      const hour = String(9 + (videoIndex % 8)).padStart(2, "0");
+      const minute = videoIndex % 2 ? "00" : "30";
+      return `
+        <div class="automation-upload-row automation-pending-row" data-generated-pending-row>
+          <div class="automation-upload-video"><span class="automation-upload-thumb${thumbClass}" aria-hidden="true"></span><span class="automation-upload-name">${escapeHtml(videoName)}</span></div>
+          <div class="automation-pending-actions">
+            <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即上传</button>
+            <span class="automation-pending-divider" aria-hidden="true"></span>
+            <span class="automation-pending-schedule" hidden>
+              <input class="automation-pending-input" type="date" value="2026-07-${day}" aria-label="预约上传日期">
+              <input class="automation-pending-input" type="time" value="${hour}:${minute}" aria-label="预约上传时间">
+            </span>
+            <button class="automation-pending-action" type="button" data-pending-action="schedule">预约上传</button>
+            <span class="automation-pending-divider" aria-hidden="true"></span>
+            <button class="automation-pending-action danger" type="button" data-pending-action="delete">删除</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAutomationPendingUploadDemoRows() {
+      if (!automationPendingUploadTable || automationPendingUploadTable.dataset.demoRowsReady === "true") return;
+      const existingRows = automationPendingUploadTable.querySelectorAll(".automation-pending-row:not(.automation-upload-head)").length;
+      const nextRows = [];
+      for (let order = existingRows + 1; order <= 12; order += 1) {
+        nextRows.push(automationPendingUploadRowMarkup(order + 2));
+      }
+      automationPendingUploadTable.insertAdjacentHTML("beforeend", nextRows.join(""));
+      automationPendingUploadTable.dataset.demoRowsReady = "true";
+    }
+
+    function appendExtractedPendingVideos(count = 10) {
+      if (!automationPendingUploadTable) return;
+      const existingRows = automationPendingUploadTable.querySelectorAll(".automation-pending-row:not(.automation-upload-head)").length;
+      const nextRows = [];
+      for (let order = 1; order <= count; order += 1) {
+        nextRows.push(automationPendingUploadRowMarkup(existingRows + order + 2));
+      }
+      automationPendingUploadTable.insertAdjacentHTML("beforeend", nextRows.join(""));
+      syncAutomationUploadTabCounts();
+    }
+
+    function setAutomationUploadView(view) {
+      const section = document.querySelector(".automation-upload-history");
+      section?.querySelectorAll("[data-upload-view]").forEach(tab => {
+        const isActive = tab.dataset.uploadView === view;
+        tab.classList.toggle("active", isActive);
+        tab.setAttribute("aria-selected", String(isActive));
+      });
+      section?.querySelectorAll("[data-upload-panel]").forEach(panel => {
+        panel.hidden = panel.dataset.uploadPanel !== view;
+      });
+    }
+
+    renderAutomationUploadHistoryDemoRows();
+    renderAutomationPendingUploadDemoRows();
+    syncAutomationUploadTabCounts();
+
+    function showAutomationTaskList(options = {}) {
+      state.automationView = "automation";
+      state.automationDetailOpen = false;
+      pageAutomation?.querySelectorAll("[data-automation-tab]").forEach(btn => {
+        const isActive = btn.dataset.automationTab === "automation";
+        btn.classList.toggle("active", isActive);
+        btn.setAttribute("aria-pressed", String(isActive));
+      });
+      const automationSection = document.getElementById("automationTaskSummary");
+      const scheduleSection = document.getElementById("scheduleTaskList");
+      if (automationSection) automationSection.hidden = false;
+      if (scheduleSection) scheduleSection.hidden = true;
+      if (automationExecutionDetail) automationExecutionDetail.hidden = true;
+      renderAutomationScopeStats("automation");
+      if (options.resetScroll && routeShell) routeShell.scrollTo({ top: 0, behavior: options.smooth ? "smooth" : "auto" });
+    }
+
+    function openAutomationExecutionDetail(row) {
+      if (!automationExecutionDetail || !row) return;
+      state.automationView = "automation";
+      state.automationDetailOpen = true;
+      const taskName = automationTaskNameFromRow(row);
+      const browserName = row.dataset.taskBrowser || row.querySelector(".automation-task-sub")?.textContent?.trim() || "未选择浏览器";
+      const fileName = row.dataset.taskFile || "";
+      const nextRun = automationRowNextRun(row);
+      const automationSection = document.getElementById("automationTaskSummary");
+      const scheduleSection = document.getElementById("scheduleTaskList");
+      if (automationSection) automationSection.hidden = true;
+      if (scheduleSection) scheduleSection.hidden = true;
+      automationExecutionDetail.hidden = false;
+      automationExecutionDetail.dataset.nextRun = nextRun;
+      automationExecutionDetail.dataset.taskFile = fileName;
+      if (automationDetailTaskName) automationDetailTaskName.textContent = "添加视频";
+      if (automationDetailBrowserName) automationDetailBrowserName.textContent = browserName;
+      syncAutomationDetailAttachment(fileName);
+      automationDetailLog?.querySelectorAll(".chat-side-log__name").forEach(node => {
+        node.textContent = taskName;
+      });
+      syncAutomationDetailOverview(browserName, fileName);
+      renderAutomationScopeStats("automation");
+      if (routeShell) routeShell.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
     function bindAutomationRow(row) {
       if (!row || row.dataset.bound === "true") return;
       row.dataset.bound = "true";
@@ -7991,6 +9100,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
             openAutomationRecordDrawer(row);
             return;
           }
+          if (button.dataset.autoAction === "detail") {
+            openAutomationExecutionDetail(row);
+            return;
+          }
           if (button.dataset.autoAction === "delete") {
             row.remove();
             renderAutomationScopeStats();
@@ -8002,6 +9115,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       });
       row.addEventListener("click", event => {
         if (event.target.closest("button")) return;
+        if (isTiktokAutomationRow(row)) {
+          openAutomationExecutionDetail(row);
+          return;
+        }
         openAutomationRecordDrawer(row);
       });
     }
@@ -8026,6 +9143,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const { rule, nextRun } = taskDetailScheduleSummary();
       const taskName = history.title || "新建任务";
       const automationKey = `${agent.name}::created::${history.id}`;
+      const usesDetailPage = (group.getAttribute("aria-label") || "").includes("Tiktok上传助手");
       const row = document.createElement("div");
       row.className = "automation-form-row is-new-task";
       row.dataset.automationRow = "";
@@ -8044,7 +9162,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         <div class="automation-status-cell"><span class="automation-status">运行中</span><button class="automation-form-action toggle-pause" type="button" data-auto-action="toggle">运行中</button></div>
         <div class="automation-form-actions">
           <button class="automation-form-action" type="button" data-auto-action="edit">编辑</button>
-          <button class="automation-form-action" type="button" data-auto-action="record">执行记录</button>
+          <button class="automation-form-action" type="button" data-auto-action="${usesDetailPage ? "detail" : "record"}">${usesDetailPage ? "执行详情" : "执行记录"}</button>
         </div>
       `;
       const firstTaskRow = table.querySelector("[data-automation-row]");
@@ -8235,6 +9353,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     function setAutomationView(tab, options = {}) {
       const pageNode = pageAutomation;
       state.automationView = tab === "schedule" ? "schedule" : "automation";
+      state.automationDetailOpen = false;
       if (!pageNode) return;
       pageNode.querySelectorAll("[data-automation-tab]").forEach(btn => {
         const isActive = btn.dataset.automationTab === state.automationView;
@@ -8245,6 +9364,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const scheduleSection = document.getElementById("scheduleTaskList");
       if (automationSection) automationSection.hidden = state.automationView !== "automation";
       if (scheduleSection) scheduleSection.hidden = state.automationView !== "schedule";
+      if (automationExecutionDetail) automationExecutionDetail.hidden = true;
       renderAutomationScopeStats(state.automationView);
       if (options.resetScroll && routeShell) routeShell.scrollTo({ top: 0, behavior: options.smooth ? "smooth" : "auto" });
     }
@@ -8265,20 +9385,6 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const desiredTop = (headerRect?.bottom || routeShell.getBoundingClientRect().top) + 36;
       const nextTop = routeShell.scrollTop + targetRect.top - desiredTop;
       routeShell.scrollTo({ top: Math.max(0, nextTop), behavior: "smooth" });
-    }
-
-    function scrollAgentCardToViewCenter(agentName, behavior = "auto") {
-      if (!routeShell || !agentName) return;
-      const card = Array.from(document.querySelectorAll(".acard")).find(item => item.dataset.agentName === agentName);
-      if (!card) return;
-      const shellRect = routeShell.getBoundingClientRect();
-      const cardRect = card.getBoundingClientRect();
-      const desiredTop = shellRect.top + Math.max(0, (shellRect.height - cardRect.height) / 2);
-      const maxTop = Math.max(0, routeShell.scrollHeight - routeShell.clientHeight);
-      const nextTop = Math.min(maxTop, Math.max(0, routeShell.scrollTop + cardRect.top - desiredTop));
-      routeShell.scrollTo({ top: nextTop, behavior });
-      routeScrollPositions.set("agents", nextTop);
-      updateGlobalScrollThumb(routeShell);
     }
 
     function saveRouteScroll(page = state.page) {
@@ -8488,9 +9594,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     function syncAgentCardSelection() {
       document.querySelectorAll(".acard").forEach(card => {
         const isSelected = card.dataset.agentName === state.drawerAgent;
-        const isInlinePanelSelected = isSelected && state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden;
         card.classList.toggle("selected", isSelected);
-        card.classList.toggle("inline-panel-selected", isInlinePanelSelected);
       });
     }
 
@@ -8504,7 +9608,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       agentDrawerDesc.textContent = clean(agent.desc);
       const isTaskAgent = isCopyrightTaskAgent(agent);
       const isPendingPermission = hasPendingPermissionRequest(agent);
-      const closeLabel = state.drawerRequiresPermission ? "收起侧边栏" : "关闭详情";
+      const closeLabel = "关闭详情";
       agentDrawerCloseBtn.title = closeLabel;
       agentDrawerCloseBtn.setAttribute("aria-label", closeLabel);
       if (state.drawerRequiresPermission) {
@@ -8553,13 +9657,9 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     function openAgentDrawer(agent, requiresPermission = false) {
       state.drawerAgent = agent.name;
       state.drawerRequiresPermission = requiresPermission;
-      agentDetailLayer.classList.toggle("is-inline-permission", requiresPermission);
       renderAgentDrawer(agent);
       agentDetailLayer.hidden = false;
       syncAgentCardSelection();
-      if (requiresPermission) {
-        requestAnimationFrame(() => scrollAgentCardToViewCenter(agent.name));
-      }
     }
 
     function toggleAgentDrawer(agent, requiresPermission = false) {
@@ -8578,7 +9678,6 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     function closeAgentDrawer() {
       state.drawerAgent = "";
       state.drawerRequiresPermission = false;
-      agentDetailLayer?.classList.remove("is-inline-permission");
       if (agentDetailLayer) agentDetailLayer.hidden = true;
       syncAgentCardSelection();
     }
@@ -8966,19 +10065,32 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const agent = targetAgent || selectedAgent();
       const history = targetHistory || activeHistoryFor(agent);
       if (!history) return;
+      pendingDeleteUploadRow = null;
       pendingDeleteSession = { agentName: agent.name, historyId: history.id, title: history.title };
       deleteConfirmText.textContent = `确定删除「${history.title}」吗？删除后该会话将从会话/任务列表中移除。`;
+      deleteConfirmDialog.hidden = false;
+    }
+
+    function openUploadDeleteConfirm(row) {
+      if (!row) return;
+      const videoName = row.querySelector(".automation-upload-name")?.textContent?.trim() || "视频";
+      pendingDeleteSession = null;
+      pendingDeleteUploadRow = { row, videoName };
+      deleteConfirmText.textContent = `确定删除「${videoName}」吗？删除后该视频将从待上传列表中移除。`;
       deleteConfirmDialog.hidden = false;
     }
 
     function closeDeleteConfirm() {
       deleteConfirmDialog.hidden = true;
       pendingDeleteSession = null;
+      pendingDeleteUploadRow = null;
     }
 
     function openCopyrightTaskDialog(options = {}) {
       closeAgentDrawer();
       const isEdit = options.mode === "edit";
+      const flowName = options.flow || "Tiktok上传";
+      const hideTiktokEditFields = isEdit && flowName === "Tiktok上传";
       if (copyrightTaskTitle) copyrightTaskTitle.textContent = isEdit ? "编辑任务" : "新建任务";
       if (copyrightTaskDesc) {
         copyrightTaskDesc.textContent = isEdit
@@ -8991,7 +10103,12 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       }
       if (copyrightTaskDeleteBtn) copyrightTaskDeleteBtn.hidden = !isEdit;
       if (copyrightTaskName) copyrightTaskName.value = options.taskName || "Tiktok上传任务";
-      if (copyrightTaskFlow?.options?.[0]) copyrightTaskFlow.options[0].textContent = options.flow || "Tiktok上传";
+      if (copyrightTaskFlow?.options?.[0]) copyrightTaskFlow.options[0].textContent = flowName;
+      if (copyrightTaskMaterialField) copyrightTaskMaterialField.hidden = hideTiktokEditFields;
+      if (copyrightTaskStartTimeField) copyrightTaskStartTimeField.hidden = hideTiktokEditFields;
+      if (copyrightTaskReservationField) copyrightTaskReservationField.hidden = !hideTiktokEditFields;
+      if (copyrightTaskAdvanceDays) copyrightTaskAdvanceDays.value = options.advanceDays || "2";
+      if (copyrightTaskPublishTimes) copyrightTaskPublishTimes.value = options.publishTimes || "09:00, 17:00";
       if (copyrightTaskBrowser) {
         const browser = options.browser || "";
         const matched = Array.from(copyrightTaskBrowser.options).find(option => option.textContent === browser);
@@ -8999,7 +10116,8 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       }
       if (copyrightTaskFileName) copyrightTaskFileName.textContent = options.fileName || "选择文件";
       if (copyrightTaskMaterial) copyrightTaskMaterial.value = "";
-      syncTaskUploadActions(copyrightTaskFileName, copyrightTaskFileRemoveBtn, copyrightTaskContinueUploadBtn);
+      syncTaskUploadActions(copyrightTaskFileName, null, copyrightTaskContinueUploadBtn);
+      if (hideTiktokEditFields && copyrightTaskContinueUploadBtn) copyrightTaskContinueUploadBtn.hidden = true;
       copyrightTaskDialog.dataset.mode = isEdit ? "edit" : "create";
       copyrightTaskDialog.dataset.taskName = options.taskName || "Tiktok上传任务";
       populateNumberSelects();
@@ -9013,6 +10131,9 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       delete copyrightTaskDialog.dataset.mode;
       delete copyrightTaskDialog.dataset.taskName;
       if (copyrightTaskDeleteBtn) copyrightTaskDeleteBtn.hidden = true;
+      if (copyrightTaskMaterialField) copyrightTaskMaterialField.hidden = false;
+      if (copyrightTaskStartTimeField) copyrightTaskStartTimeField.hidden = false;
+      if (copyrightTaskReservationField) copyrightTaskReservationField.hidden = true;
     }
 
     function openScheduleTaskEditor(card) {
@@ -9132,6 +10253,14 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     }
 
     function confirmDeleteSession() {
+      if (pendingDeleteUploadRow) {
+        const { row, videoName } = pendingDeleteUploadRow;
+        row?.remove();
+        syncAutomationUploadTabCounts();
+        closeDeleteConfirm();
+        showToast(`已删除「${videoName}」`);
+        return;
+      }
       if (!pendingDeleteSession) return;
       const agent = agents.find(item => item.name === pendingDeleteSession.agentName);
       deletedSessionIds.add(pendingDeleteSession.historyId);
@@ -9386,8 +10515,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         .join("");
       const card = document.createElement("article");
       const isSelected = state.drawerAgent === agent.name;
-      const isInlinePanelSelected = isSelected && state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden;
-      card.className = `acard ${agent.group === "training" ? "training" : ""} ${isSelected ? "selected" : ""} ${isInlinePanelSelected ? "inline-panel-selected" : ""}`;
+      card.className = `acard ${agent.group === "training" ? "training" : ""} ${isSelected ? "selected" : ""}`;
       card.tabIndex = 0;
       card.dataset.agentName = agent.name;
       card.innerHTML = `
@@ -9506,9 +10634,6 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       trainingEmpty.hidden = true;
       trainingSection.hidden = true;
       renderSessions();
-      if (state.drawerRequiresPermission && agentDetailLayer && !agentDetailLayer.hidden) {
-        requestAnimationFrame(() => scrollAgentCardToViewCenter(state.drawerAgent));
-      }
     }
 
     document.querySelectorAll("[data-filter]").forEach(button => {
@@ -9549,6 +10674,127 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       });
     });
 
+    document.querySelectorAll("[data-upload-view]").forEach(button => {
+      button.addEventListener("click", () => {
+        const view = button.dataset.uploadView;
+        const section = button.closest(".automation-upload-history");
+        section?.querySelectorAll("[data-upload-view]").forEach(tab => {
+          const isActive = tab === button;
+          tab.classList.toggle("active", isActive);
+          tab.setAttribute("aria-selected", String(isActive));
+        });
+        section?.querySelectorAll("[data-upload-panel]").forEach(panel => {
+          panel.hidden = panel.dataset.uploadPanel !== view;
+        });
+      });
+    });
+
+    let activeUploadHeadTooltipTrigger = null;
+
+    function ensureAutomationFloatingTooltip() {
+      let tooltip = document.getElementById("automationFloatingTooltip");
+      if (!tooltip) {
+        tooltip = document.createElement("div");
+        tooltip.id = "automationFloatingTooltip";
+        tooltip.className = "automation-floating-tooltip";
+        tooltip.setAttribute("role", "tooltip");
+        document.body.appendChild(tooltip);
+      }
+      return tooltip;
+    }
+
+    function positionAutomationFloatingTooltip(trigger) {
+      const tooltip = ensureAutomationFloatingTooltip();
+      const rect = trigger.getBoundingClientRect();
+      const margin = 12;
+      tooltip.style.visibility = "hidden";
+      tooltip.classList.add("show");
+      const tooltipWidth = tooltip.offsetWidth;
+      const tooltipHeight = tooltip.offsetHeight;
+      const preferredLeft = rect.left + (rect.width / 2) - (tooltipWidth / 2);
+      const maxLeft = Math.max(margin, window.innerWidth - tooltipWidth - margin);
+      const left = Math.min(maxLeft, Math.max(margin, preferredLeft));
+      const belowTop = rect.bottom + 8;
+      const aboveTop = rect.top - tooltipHeight - 8;
+      let top = belowTop + tooltipHeight <= window.innerHeight - margin ? belowTop : aboveTop;
+      top = Math.min(Math.max(margin, top), Math.max(margin, window.innerHeight - tooltipHeight - margin));
+      tooltip.style.left = `${Math.round(left)}px`;
+      tooltip.style.top = `${Math.round(top)}px`;
+      tooltip.style.visibility = "visible";
+    }
+
+    function showAutomationFloatingTooltip(trigger) {
+      const tooltipText = trigger.dataset.tooltip || "";
+      if (!tooltipText) return;
+      const tooltip = ensureAutomationFloatingTooltip();
+      activeUploadHeadTooltipTrigger = trigger;
+      tooltip.textContent = tooltipText;
+      positionAutomationFloatingTooltip(trigger);
+    }
+
+    function hideAutomationFloatingTooltip(trigger) {
+      if (trigger && activeUploadHeadTooltipTrigger !== trigger) return;
+      activeUploadHeadTooltipTrigger = null;
+      const tooltip = document.getElementById("automationFloatingTooltip");
+      tooltip?.classList.remove("show");
+    }
+
+    document.querySelectorAll(".automation-upload-head-info[data-tooltip]").forEach(info => {
+      info.addEventListener("mouseenter", () => showAutomationFloatingTooltip(info));
+      info.addEventListener("focus", () => showAutomationFloatingTooltip(info));
+      info.addEventListener("mouseleave", () => hideAutomationFloatingTooltip(info));
+      info.addEventListener("blur", () => hideAutomationFloatingTooltip(info));
+    });
+
+    document.querySelectorAll(".automation-upload-data").forEach(dataGroup => {
+      if (dataGroup.classList.contains("is-disabled")) return;
+      dataGroup.setAttribute("role", "button");
+      dataGroup.tabIndex = 0;
+      dataGroup.setAttribute("aria-label", "查看播放、点赞、评论数据详情");
+    });
+
+    automationExecutionDetail?.addEventListener("click", event => {
+      const dataGroup = event.target.closest(".automation-upload-data");
+      if (!dataGroup || dataGroup.classList.contains("is-disabled")) return;
+      showToast(dataGroup.getAttribute("aria-label") || "查看播放、点赞、评论数据详情");
+    });
+
+    automationExecutionDetail?.addEventListener("keydown", event => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const dataGroup = event.target.closest(".automation-upload-data");
+      if (!dataGroup || dataGroup.classList.contains("is-disabled")) return;
+      event.preventDefault();
+      showToast(dataGroup.getAttribute("aria-label") || "查看播放、点赞、评论数据详情");
+    });
+
+    automationExecutionDetail?.addEventListener("click", event => {
+      const action = event.target.closest("[data-pending-action]");
+      if (!action) return;
+      const row = action.closest(".automation-pending-row");
+      const schedule = row?.querySelector(".automation-pending-schedule");
+      const videoName = row?.querySelector(".automation-upload-name")?.textContent?.trim() || "视频";
+      if (action.dataset.pendingAction === "schedule") {
+        if (schedule) schedule.hidden = !schedule.hidden;
+        if (schedule && !schedule.hidden) schedule.querySelector("input")?.focus();
+        return;
+      }
+      if (action.dataset.pendingAction === "upload") {
+        showToast(`已触发「${videoName}」立即上传`);
+        return;
+      }
+      if (action.dataset.pendingAction === "delete") {
+        openUploadDeleteConfirm(row);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      if (activeUploadHeadTooltipTrigger) positionAutomationFloatingTooltip(activeUploadHeadTooltipTrigger);
+    });
+
+    window.addEventListener("scroll", () => {
+      if (activeUploadHeadTooltipTrigger) positionAutomationFloatingTooltip(activeUploadHeadTooltipTrigger);
+    }, true);
+
     routeShell?.addEventListener("scroll", () => {
       saveRouteScroll();
     }, { passive: true });
@@ -9570,10 +10816,9 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 
     function openAutomationRecordDrawer(row) {
       if (!automationRecordLayer || !row) return;
-      const cells = Array.from(row.children);
       const taskName = row.dataset.taskName || row.querySelector(".automation-task-title")?.textContent || "自动化任务";
       const statusText = row.querySelector(".automation-status")?.textContent?.trim() || "运行中";
-      const nextRun = row.dataset.nextRun || cells[4]?.textContent?.trim() || "今天 12:00";
+      const nextRun = automationRowNextRun(row);
       const isPaused = statusText.includes("暂停");
       if (automationRecordTaskName) automationRecordTaskName.textContent = taskName;
       if (automationRecordStatusText) {
@@ -9599,6 +10844,50 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     automationRecordCloseBtn?.addEventListener("click", closeAutomationRecordDrawer);
     automationRecordLayer?.addEventListener("click", event => {
       if (event.target === automationRecordLayer) closeAutomationRecordDrawer();
+    });
+    automationDetailBackBtn?.addEventListener("click", () => showAutomationTaskList({ resetScroll: true, smooth: true }));
+    automationDetailUploadCard?.addEventListener("click", event => {
+      if (event.target === automationDetailUploadInput) return;
+      if (automationDetailUploadCard.classList.contains("is-extracting")) return;
+      automationDetailUploadInput?.click();
+    });
+    automationDetailUploadCard?.addEventListener("keydown", event => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      if (automationDetailUploadCard.classList.contains("is-extracting")) return;
+      event.preventDefault();
+      automationDetailUploadInput?.click();
+    });
+    automationDetailUploadInput?.addEventListener("change", () => {
+      const nextFileName = automationDetailUploadInput.files?.[0]?.name || "";
+      if (!nextFileName) return;
+      const names = attachmentNamesFromValue(automationExecutionDetail?.dataset.taskFile || "");
+      names.push(nextFileName);
+      const nextValue = names.join(",");
+      if (automationExecutionDetail) automationExecutionDetail.dataset.taskFile = nextValue;
+      syncAutomationDetailAttachment(nextValue);
+      syncAutomationDetailOverview(automationOverviewBrowserTitle?.textContent || automationDetailBrowserName?.textContent || "", nextValue);
+      automationDetailUploadCard?.classList.add("is-extracting");
+      if (automationDetailUploadBtn) automationDetailUploadBtn.disabled = true;
+      if (automationExtractProgress) automationExtractProgress.hidden = true;
+      if (automationExtractProgressBar) automationExtractProgressBar.style.width = "0%";
+      if (automationExtractProgressText) automationExtractProgressText.textContent = "正在解压 0%";
+      let progress = 0;
+      const timer = window.setInterval(() => {
+        progress = Math.min(100, progress + 12 + Math.round(Math.random() * 10));
+        if (automationExtractProgress && progress < 100) automationExtractProgress.hidden = false;
+        if (automationExtractProgressBar) automationExtractProgressBar.style.width = `${progress}%`;
+        if (automationExtractProgressText) automationExtractProgressText.textContent = progress >= 100 ? "解压成功" : `正在解压 ${progress}%`;
+        if (progress < 100) return;
+        window.clearInterval(timer);
+        appendExtractedPendingVideos(10);
+        setAutomationUploadView("pending");
+        syncAutomationDetailOverview(automationOverviewBrowserTitle?.textContent || automationDetailBrowserName?.textContent || "", nextValue);
+        automationDetailUploadCard?.classList.remove("is-extracting");
+        if (automationDetailUploadBtn) automationDetailUploadBtn.disabled = false;
+        showToast("已成功解压10条视频");
+        automationDetailUploadInput.value = "";
+        if (automationExtractProgress) automationExtractProgress.hidden = true;
+      }, 180);
     });
     automationRecordSwitchBtn?.addEventListener("click", () => {
       const isPaused = !automationRecordSwitchBtn.classList.contains("is-paused");
@@ -9791,7 +11080,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     });
     copyrightTaskMaterial.addEventListener("change", () => {
       copyrightTaskFileName.textContent = copyrightTaskMaterial.files?.[0]?.name || "选择文件";
-      syncTaskUploadActions(copyrightTaskFileName, copyrightTaskFileRemoveBtn, copyrightTaskContinueUploadBtn);
+      syncTaskUploadActions(copyrightTaskFileName, null, copyrightTaskContinueUploadBtn);
     });
     inlineTaskMaterial.addEventListener("change", () => {
       inlineTaskFileName.textContent = inlineTaskMaterial.files?.[0]?.name || "选择文件";
@@ -9799,22 +11088,12 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     });
     taskDetailMaterial?.addEventListener("change", () => {
       taskDetailFileName.textContent = taskDetailMaterial.files?.[0]?.name || "选择文件";
-      syncTaskUploadActions(taskDetailFileName, taskDetailFileRemoveBtn, taskDetailContinueUploadBtn);
-    });
-    copyrightTaskFileRemoveBtn?.addEventListener("click", event => {
-      event.preventDefault();
-      event.stopPropagation();
-      clearTaskUpload(copyrightTaskMaterial, copyrightTaskFileName, copyrightTaskFileRemoveBtn, copyrightTaskContinueUploadBtn);
+      syncTaskUploadActions(taskDetailFileName, null, taskDetailContinueUploadBtn);
     });
     inlineTaskFileRemoveBtn?.addEventListener("click", event => {
       event.preventDefault();
       event.stopPropagation();
       clearTaskUpload(inlineTaskMaterial, inlineTaskFileName, inlineTaskFileRemoveBtn, inlineTaskContinueUploadBtn);
-    });
-    taskDetailFileRemoveBtn?.addEventListener("click", event => {
-      event.preventDefault();
-      event.stopPropagation();
-      clearTaskUpload(taskDetailMaterial, taskDetailFileName, taskDetailFileRemoveBtn, taskDetailContinueUploadBtn);
     });
     copyrightTaskContinueUploadBtn?.addEventListener("click", () => {
       copyrightTaskMaterial?.click();
