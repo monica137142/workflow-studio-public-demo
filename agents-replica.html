@@ -4016,8 +4016,8 @@
       outline: none;
     }
 
-    .automation-pending-input[type="time"] {
-      min-width: 92px;
+    .automation-pending-input[type="datetime-local"] {
+      min-width: 184px;
     }
 
     .automation-pending-input:focus {
@@ -6708,7 +6708,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                       </select>
                     </div>
                   </div>
-                  <div class="task-field">
+                  <div class="task-field" id="taskDetailMaterialField">
                     <label class="task-label" for="taskDetailMaterial">任务参数</label>
                     <div class="task-upload">
                       <span class="task-upload-icon" aria-hidden="true"></span>
@@ -6722,7 +6722,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
 └─ video_001.mp4
 tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                   </div>
-                  <div class="task-field">
+                  <div class="task-field" id="taskDetailStartTimeField">
                     <label class="task-label">开始时间</label>
                     <input class="task-text task-control-lg" type="datetime-local">
                   </div>
@@ -6817,8 +6817,26 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                       </div>
                     </div>
                   </div>
+                  <div class="task-field" id="taskDetailReservationField" hidden>
+                    <span class="task-label task-label-with-info">预约配置<i class="task-info" tabindex="0" aria-label="预约配置说明" data-tooltip="执行参数配置，配置后自动预约tt后台发布时间">i</i></span>
+                    <div class="task-reservation-panel">
+                      <div class="task-inline-fields">
+                        <div>
+                          <label class="task-mini-label" for="detailTaskAdvanceDays">提前天数</label>
+                          <div class="task-input-unit">
+                            <input class="task-text task-control-sm" id="detailTaskAdvanceDays" type="number" min="0" value="2">
+                            <span class="task-unit">天</span>
+                          </div>
+                        </div>
+                        <div>
+                          <label class="task-mini-label" for="detailTaskPublishTimes">预约上传时间（逗号分隔）</label>
+                          <input class="task-text task-control-lg" id="detailTaskPublishTimes" type="text" value="09:00, 17:00">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                   <div class="task-field">
-                    <span class="task-label">并发策略</span>
+                    <span class="task-label task-label-with-info">并发策略<i class="task-info" tabindex="0" aria-label="并发策略说明" data-tooltip="一个周期性任务，周期内没执行时该怎么做。例如每天发视频，今天的任务到明天任务开始的时间还没有执行完时，可以跳过、并行执行、取消旧任务后执行。">i</i></span>
                     <div class="task-options inline">
                       <label class="task-radio"><input type="radio" name="detailTaskConcurrency" checked><span>跳过（有执行中任务时不触发）</span></label>
                       <label class="task-radio"><input type="radio" name="detailTaskConcurrency"><span>允许（可并行执行）</span></label>
@@ -6826,7 +6844,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                     </div>
                   </div>
                   <div class="task-field">
-                    <span class="task-label">错过执行</span>
+                    <span class="task-label task-label-with-info">错过执行<i class="task-info" tabindex="0" aria-label="错过执行说明" data-tooltip="RPA服务器挂掉之后的逻辑，跳过（不重新跑）、补跑（重新跑一次）、追赶（基于之前跑的内容进行重跑）">i</i></span>
                     <div class="task-options inline">
                       <label class="task-radio"><input type="radio" name="detailTaskMissedRun" checked><span>跳过（只等下次）</span></label>
                       <label class="task-radio"><input type="radio" name="detailTaskMissedRun"><span>补跑一次</span></label>
@@ -7154,8 +7172,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</span></i>
                               <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即上传</button>
                               <span class="automation-pending-divider" aria-hidden="true"></span>
                               <span class="automation-pending-schedule" hidden>
-                                <input class="automation-pending-input" type="date" value="2026-07-18" aria-label="预约上传日期">
-                                <input class="automation-pending-input" type="time" value="18:00" aria-label="预约上传时间">
+                                <input class="automation-pending-input" type="datetime-local" value="2026-07-18T18:00" aria-label="预约上传日期和时间">
                               </span>
                               <button class="automation-pending-action" type="button" data-pending-action="schedule">预约上传</button>
                               <span class="automation-pending-divider" aria-hidden="true"></span>
@@ -8201,6 +8218,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const inlineTaskDailyNextRun = document.getElementById("inlineTaskDailyNextRun");
     const inlineTaskWeeklyNextRun = document.getElementById("inlineTaskWeeklyNextRun");
     const inlineTaskAdvancedNextRun = document.getElementById("inlineTaskAdvancedNextRun");
+    const taskDetailMaterialField = document.getElementById("taskDetailMaterialField");
+    const taskDetailStartTimeField = document.getElementById("taskDetailStartTimeField");
+    const taskDetailReservationField = document.getElementById("taskDetailReservationField");
+    const detailTaskAdvanceDays = document.getElementById("detailTaskAdvanceDays");
+    const detailTaskPublishTimes = document.getElementById("detailTaskPublishTimes");
     const detailTaskCronCyclePanel = document.getElementById("detailTaskCronCyclePanel");
     const detailTaskRandomPanel = document.getElementById("detailTaskRandomPanel");
     const detailTaskSinglePanel = document.getElementById("detailTaskSinglePanel");
@@ -8800,10 +8822,26 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       if (taskDetailDivider) taskDetailDivider.hidden = false;
     }
 
+    function shouldUseTiktokUploadCreateForm(history, agent) {
+      return Boolean(history?.isNewTask && agent?.name === "Tiktok上传");
+    }
+
+    function syncTaskDetailCreateForm(history, agent) {
+      const useTiktokUploadForm = shouldUseTiktokUploadCreateForm(history, agent);
+      if (taskDetailMaterialField) taskDetailMaterialField.hidden = useTiktokUploadForm;
+      if (taskDetailStartTimeField) taskDetailStartTimeField.hidden = useTiktokUploadForm;
+      if (taskDetailReservationField) taskDetailReservationField.hidden = !useTiktokUploadForm;
+      if (useTiktokUploadForm) {
+        if (detailTaskAdvanceDays) detailTaskAdvanceDays.value = history?.advanceDays || "2";
+        if (detailTaskPublishTimes) detailTaskPublishTimes.value = history?.publishTimes || "09:00, 17:00";
+      }
+    }
+
     function syncTaskDetailRecord(history, agent = selectedAgent()) {
       const title = history?.title || "Tiktok上传任务";
       const draftTitle = history?.pendingTaskTitle || "Tiktok上传任务";
       const flowName = history?.isNewTask ? agent?.name || "Tiktok上传" : history?.taskFlow || agent?.name || "Tiktok上传";
+      syncTaskDetailCreateForm(history, agent);
       if (taskDetailNameInput && document.activeElement !== taskDetailNameInput) {
         taskDetailNameInput.value = history?.isNewTask ? draftTitle : title;
       }
@@ -8980,8 +9018,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
             <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即上传</button>
             <span class="automation-pending-divider" aria-hidden="true"></span>
             <span class="automation-pending-schedule" hidden>
-              <input class="automation-pending-input" type="date" value="2026-07-${day}" aria-label="预约上传日期">
-              <input class="automation-pending-input" type="time" value="${hour}:${minute}" aria-label="预约上传时间">
+              <input class="automation-pending-input" type="datetime-local" value="2026-07-${day}T${hour}:${minute}" aria-label="预约上传日期和时间">
             </span>
             <button class="automation-pending-action" type="button" data-pending-action="schedule">预约上传</button>
             <span class="automation-pending-divider" aria-hidden="true"></span>
@@ -11034,6 +11071,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         return;
       }
       sourceHistory.pendingTaskTitle = taskDetailNameInput?.value.trim() || "Tiktok上传任务";
+      if (shouldUseTiktokUploadCreateForm(sourceHistory, agent)) {
+        sourceHistory.advanceDays = detailTaskAdvanceDays?.value || "2";
+        sourceHistory.publishTimes = detailTaskPublishTimes?.value || "09:00, 17:00";
+      }
       sourceHistory.isTaskDetailSubmitting = true;
       renderChat();
       window.setTimeout(() => completeNewTaskDetail(sourceHistory), 1500);
