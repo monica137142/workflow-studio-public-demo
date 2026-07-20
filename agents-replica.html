@@ -3936,11 +3936,6 @@
       color: #e14b4b;
     }
 
-    .automation-upload-status.pending {
-      background: #eef5ff;
-      color: #2f75d6;
-    }
-
     .automation-pending-table {
       min-width: 640px;
     }
@@ -7136,25 +7131,25 @@ tag.txt 为标签；同级视频文件会进入 videos/。</span></i>
                             <div class="automation-upload-video"><span class="automation-upload-thumb" aria-hidden="true"></span><span class="automation-upload-name">video_001.mp4</span></div>
                             <div>2026-07-18 18:00</div>
                             <div>2026-07-16 15:39</div>
-                            <div><span class="automation-upload-status pending">等待发布</span></div>
+                            <div><span class="automation-upload-status">成功</span></div>
                             <div class="automation-upload-data is-disabled">
                               <span class="automation-upload-metric" aria-label="播放数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>-</span>
                               <span class="automation-upload-metric" aria-label="点赞数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3z"/><path d="M7 10l4-7a2 2 0 0 1 3.7 1.3L14 9h5.4a2 2 0 0 1 2 2.3l-1.2 8A2 2 0 0 1 18.2 21H7"/></svg>-</span>
                               <span class="automation-upload-metric" aria-label="评论数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6.1A8 8 0 1 1 21 12z"/></svg>-</span>
                             </div>
-                            <div><span class="automation-upload-risk">已通过</span></div>
+                            <div>-</div>
                           </div>
                           <div class="automation-upload-row">
                             <div class="automation-upload-video"><span class="automation-upload-thumb alt" aria-hidden="true"></span><span class="automation-upload-name">video_002.mp4</span></div>
                             <div>2026-07-18 18:00</div>
                             <div>2026-07-16 15:39</div>
-                            <div><span class="automation-upload-status pending">等待发布</span></div>
+                            <div><span class="automation-upload-status">成功</span></div>
                             <div class="automation-upload-data is-disabled">
                               <span class="automation-upload-metric" aria-label="播放数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>-</span>
                               <span class="automation-upload-metric" aria-label="点赞数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 10v11H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3z"/><path d="M7 10l4-7a2 2 0 0 1 3.7 1.3L14 9h5.4a2 2 0 0 1 2 2.3l-1.2 8A2 2 0 0 1 18.2 21H7"/></svg>-</span>
                               <span class="automation-upload-metric" aria-label="评论数 -"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-6.1A8 8 0 1 1 21 12z"/></svg>-</span>
                             </div>
-                            <div><span class="automation-upload-risk abnormal">未通过</span></div>
+                            <div>-</div>
                           </div>
                         </div>
                       </div>
@@ -8966,10 +8961,12 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const playCount = hasMetrics ? (isFailed ? "0" : (9200 + index * 417).toLocaleString("en-US")) : "-";
       const likeCount = hasMetrics ? (isFailed ? "0" : String(420 + index * 31)) : "-";
       const commentCount = hasMetrics ? (isFailed ? "0" : String(18 + index * 2)) : "-";
-      const isWaitingPublish = index <= 3;
-      const statusClass = isWaitingPublish ? " pending" : (isFailed ? " failed" : "");
-      const statusText = isWaitingPublish ? "等待发布" : (isFailed ? "失败" : "成功");
+      const statusClass = isFailed ? " failed" : "";
+      const statusText = isFailed ? "失败" : "成功";
       const dataClass = hasMetrics ? "automation-upload-data" : "automation-upload-data is-disabled";
+      const riskMarkup = hasMetrics
+        ? `<span class="automation-upload-risk${isFailed ? " abnormal" : ""}">${isFailed ? "未通过" : "已通过"}</span>`
+        : "-";
       const thumbClass = index % 3 === 1 ? "" : (index % 3 === 2 ? " alt" : " cool");
       return `
         <div class="automation-upload-row" data-generated-upload-row>
@@ -8982,7 +8979,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
             ${automationUploadMetricMarkup("like", "点赞数", likeCount)}
             ${automationUploadMetricMarkup("comment", "评论数", commentCount)}
           </div>
-          <div><span class="automation-upload-risk${isFailed ? " abnormal" : ""}">${isFailed ? "未通过" : "已通过"}</span></div>
+          <div>${riskMarkup}</div>
         </div>
       `;
     }
