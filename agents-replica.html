@@ -3930,26 +3930,56 @@
       font-weight: 600;
     }
 
+    button.automation-upload-risk {
+      border: 0;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
     .automation-upload-status.failed,
     .automation-upload-risk.abnormal {
       background: #fff0ed;
       color: #e14b4b;
     }
 
+    .automation-upload-risk.abnormal[data-risk-detail] {
+      gap: 4px;
+      padding-right: 7px;
+    }
+
+    .automation-upload-risk.abnormal[data-risk-detail]::after {
+      content: ">";
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .automation-upload-risk.abnormal[data-risk-detail]:hover,
+    .automation-upload-risk.abnormal[data-risk-detail]:focus-visible {
+      background: #ffe5e0;
+      outline: none;
+    }
+
     .automation-pending-table {
-      min-width: 640px;
+      min-width: 940px;
     }
 
     .automation-pending-row {
-      grid-template-columns: minmax(260px, 1fr) minmax(360px, auto);
+      grid-template-columns: minmax(220px, 260px) 150px 480px;
+      justify-content: space-between;
+    }
+
+    .automation-pending-row > :last-child {
+      justify-self: stretch;
     }
 
     .automation-pending-actions {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       align-items: center;
       justify-content: flex-start;
       gap: 14px;
+      white-space: nowrap;
     }
 
     .automation-pending-action {
@@ -7081,7 +7111,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
                   <div class="automation-overview-stats">
                     <div class="automation-overview-stat success"><strong id="automationOverviewSuccessCount">4</strong><span>成功</span></div>
                     <div class="automation-overview-stat failed"><strong id="automationOverviewFailCount">1</strong><span>失败</span></div>
-                    <div class="automation-overview-stat pending"><strong id="automationOverviewPendingCount">1</strong><span>待上传</span></div>
+                    <div class="automation-overview-stat pending"><strong id="automationOverviewPendingCount">1</strong><span>待发布</span></div>
                   </div>
                 </section>
                 <div class="automation-detail-panel">
@@ -7111,8 +7141,8 @@ tag.txt 为标签；同级视频文件会进入 videos/。</span></i>
                   </section>
                   <section class="automation-upload-history" aria-label="上传视频记录">
                     <div class="automation-upload-tabs" role="tablist" aria-label="上传记录视图">
-                      <button class="automation-upload-tab active" type="button" role="tab" aria-selected="true" data-upload-view="history">上传历史<span class="automation-upload-tab-count" id="automationUploadHistoryCount">(0)</span></button>
-                      <button class="automation-upload-tab" type="button" role="tab" aria-selected="false" data-upload-view="pending">待上传<span class="automation-upload-tab-count" id="automationPendingUploadCount">(0)</span></button>
+                      <button class="automation-upload-tab active" type="button" role="tab" aria-selected="true" data-upload-view="history">发布历史<span class="automation-upload-tab-count" id="automationUploadHistoryCount">(0)</span></button>
+                      <button class="automation-upload-tab" type="button" role="tab" aria-selected="false" data-upload-view="pending">待发布<span class="automation-upload-tab-count" id="automationPendingUploadCount">(0)</span></button>
                     </div>
                     <div class="automation-upload-panel" data-upload-panel="history">
                       <div class="automation-upload-table-card">
@@ -7159,17 +7189,19 @@ tag.txt 为标签；同级视频文件会进入 videos/。</span></i>
                         <div class="automation-upload-table automation-pending-table" id="automationPendingUploadTable">
                           <div class="automation-upload-row automation-upload-head automation-pending-row">
                             <div>视频</div>
+                            <div>上传时间</div>
                             <div>操作</div>
                           </div>
                           <div class="automation-upload-row automation-pending-row">
                             <div class="automation-upload-video"><span class="automation-upload-thumb cool" aria-hidden="true"></span><span class="automation-upload-name">video_003.mp4</span></div>
+                            <div>2026-07-16 15:39</div>
                             <div class="automation-pending-actions">
-                              <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即上传</button>
+                              <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即发布</button>
                               <span class="automation-pending-divider" aria-hidden="true"></span>
                               <span class="automation-pending-schedule" hidden>
-                                <input class="automation-pending-input" type="datetime-local" value="2026-07-18T18:00" aria-label="预约上传日期和时间">
+                                <input class="automation-pending-input" type="datetime-local" value="2026-07-18T18:00" aria-label="预约发布日期和时间">
                               </span>
-                              <button class="automation-pending-action" type="button" data-pending-action="schedule">预约上传</button>
+                              <button class="automation-pending-action" type="button" data-pending-action="schedule">预约发布</button>
                               <span class="automation-pending-divider" aria-hidden="true"></span>
                               <button class="automation-pending-action danger" type="button" data-pending-action="delete">删除</button>
                             </div>
@@ -7687,6 +7719,15 @@ tag.txt 为标签；同级视频文件会进入 videos/。</span></i>
       </div>
     </div>
   </div>
+  <div class="confirm-layer" id="riskDetailDialog" hidden>
+    <div class="confirm-modal risk-detail-modal" role="dialog" aria-modal="true" aria-labelledby="riskDetailTitle">
+      <h3 id="riskDetailTitle">查看异常详情</h3>
+      <p id="riskDetailText">该视频风控检测异常，请检查标题、标签及素材内容后重新发布。</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn danger" type="button" id="riskDetailCloseBtn">知道了</button>
+      </div>
+    </div>
+  </div>
   <div class="automation-record-layer" id="automationRecordLayer" hidden>
     <aside class="automation-record-drawer" role="dialog" aria-modal="true" aria-labelledby="automationRecordTitle">
       <header class="chat-side-panel__nav">
@@ -8136,6 +8177,9 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     const deleteConfirmText = document.getElementById("deleteConfirmText");
     const deleteCancelBtn = document.getElementById("deleteCancelBtn");
     const deleteConfirmBtn = document.getElementById("deleteConfirmBtn");
+    const riskDetailDialog = document.getElementById("riskDetailDialog");
+    const riskDetailText = document.getElementById("riskDetailText");
+    const riskDetailCloseBtn = document.getElementById("riskDetailCloseBtn");
     const automationRecordLayer = document.getElementById("automationRecordLayer");
     const automationRecordCloseBtn = document.getElementById("automationRecordCloseBtn");
     const automationRecordTaskName = document.getElementById("automationRecordTaskName");
@@ -8964,9 +9008,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const statusClass = isFailed ? " failed" : "";
       const statusText = isFailed ? "失败" : "成功";
       const dataClass = hasMetrics ? "automation-upload-data" : "automation-upload-data is-disabled";
-      const riskMarkup = hasMetrics
-        ? `<span class="automation-upload-risk${isFailed ? " abnormal" : ""}">${isFailed ? "未通过" : "已通过"}</span>`
-        : "-";
+      const riskMarkup = !hasMetrics
+        ? "-"
+        : isFailed
+          ? `<button class="automation-upload-risk abnormal" type="button" data-risk-detail data-video-name="${escapeHtml(videoName)}" aria-label="查看${escapeHtml(videoName)}异常详情">异常</button>`
+          : '<span class="automation-upload-risk">正常</span>';
       const thumbClass = index % 3 === 1 ? "" : (index % 3 === 2 ? " alt" : " cool");
       return `
         <div class="automation-upload-row" data-generated-upload-row>
@@ -9008,16 +9054,18 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const day = String(18 + ((videoIndex - 3) % 3)).padStart(2, "0");
       const hour = String(9 + (videoIndex % 8)).padStart(2, "0");
       const minute = videoIndex % 2 ? "00" : "30";
+      const uploadedMinute = String(30 + (videoIndex % 20)).padStart(2, "0");
       return `
         <div class="automation-upload-row automation-pending-row" data-generated-pending-row>
           <div class="automation-upload-video"><span class="automation-upload-thumb${thumbClass}" aria-hidden="true"></span><span class="automation-upload-name">${escapeHtml(videoName)}</span></div>
+          <div>2026-07-16 15:${uploadedMinute}</div>
           <div class="automation-pending-actions">
-            <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即上传</button>
+            <button class="automation-pending-action primary" type="button" data-pending-action="upload">立即发布</button>
             <span class="automation-pending-divider" aria-hidden="true"></span>
             <span class="automation-pending-schedule" hidden>
-              <input class="automation-pending-input" type="datetime-local" value="2026-07-${day}T${hour}:${minute}" aria-label="预约上传日期和时间">
+              <input class="automation-pending-input" type="datetime-local" value="2026-07-${day}T${hour}:${minute}" aria-label="预约发布日期和时间">
             </span>
-            <button class="automation-pending-action" type="button" data-pending-action="schedule">预约上传</button>
+            <button class="automation-pending-action" type="button" data-pending-action="schedule">预约发布</button>
             <span class="automation-pending-divider" aria-hidden="true"></span>
             <button class="automation-pending-action danger" type="button" data-pending-action="delete">删除</button>
           </div>
@@ -10110,7 +10158,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       const videoName = row.querySelector(".automation-upload-name")?.textContent?.trim() || "视频";
       pendingDeleteSession = null;
       pendingDeleteUploadRow = { row, videoName };
-      deleteConfirmText.textContent = `确定删除「${videoName}」吗？删除后该视频将从待上传列表中移除。`;
+      deleteConfirmText.textContent = `确定删除「${videoName}」吗？删除后该视频将从待发布列表中移除。`;
       deleteConfirmDialog.hidden = false;
     }
 
@@ -10118,6 +10166,21 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
       deleteConfirmDialog.hidden = true;
       pendingDeleteSession = null;
       pendingDeleteUploadRow = null;
+    }
+
+    function openRiskDetailDialog(trigger) {
+      if (!riskDetailDialog) return;
+      const row = trigger?.closest(".automation-upload-row");
+      const videoName = trigger?.dataset.videoName || row?.querySelector(".automation-upload-name")?.textContent?.trim() || "该视频";
+      if (riskDetailText) {
+        riskDetailText.textContent = `${videoName} 风控检测异常，请检查标题、标签及素材内容后重新发布。`;
+      }
+      riskDetailDialog.hidden = false;
+      requestAnimationFrame(() => riskDetailCloseBtn?.focus());
+    }
+
+    function closeRiskDetailDialog() {
+      if (riskDetailDialog) riskDetailDialog.hidden = true;
     }
 
     function openCopyrightTaskDialog(options = {}) {
@@ -10788,6 +10851,11 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     });
 
     automationExecutionDetail?.addEventListener("click", event => {
+      const riskDetailTrigger = event.target.closest("[data-risk-detail]");
+      if (riskDetailTrigger) {
+        openRiskDetailDialog(riskDetailTrigger);
+        return;
+      }
       const dataGroup = event.target.closest(".automation-upload-data");
       if (!dataGroup || dataGroup.classList.contains("is-disabled")) return;
       showToast(dataGroup.getAttribute("aria-label") || "查看播放、点赞、评论数据详情");
@@ -10813,7 +10881,7 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
         return;
       }
       if (action.dataset.pendingAction === "upload") {
-        showToast(`已触发「${videoName}」立即上传`);
+        showToast(`已触发「${videoName}」立即发布`);
         return;
       }
       if (action.dataset.pendingAction === "delete") {
@@ -11082,6 +11150,10 @@ tag.txt 为标签；同级视频文件会进入 videos/。</pre>
     deleteConfirmBtn.addEventListener("click", confirmDeleteSession);
     deleteConfirmDialog.addEventListener("click", event => {
       if (event.target === deleteConfirmDialog) closeDeleteConfirm();
+    });
+    riskDetailCloseBtn?.addEventListener("click", closeRiskDetailDialog);
+    riskDetailDialog?.addEventListener("click", event => {
+      if (event.target === riskDetailDialog) closeRiskDetailDialog();
     });
     copyrightTaskCloseBtn.addEventListener("click", closeCopyrightTaskDialog);
     copyrightTaskCancelBtn.addEventListener("click", closeCopyrightTaskDialog);
